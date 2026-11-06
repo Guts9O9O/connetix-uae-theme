@@ -430,6 +430,7 @@
       "road-curve": "Curved road",
       "road-junction": "Road junction",
       "base-plate": "Base plate"
-    }
+    },
+    "language": "Language"
   }
 }

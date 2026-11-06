@@ -171,12 +171,18 @@
             "padding-inline-start": 0,
             "padding-inline-end": 0
           }
+        },
+        "px_language_links": {
+          "type": "px-language-links",
+          "settings": {},
+          "blocks": {}
         }
       },
       "block_order": [
         "group_wErUQf",
         "menu_footer",
-        "menu_main"
+        "menu_main",
+        "px_language_links"
       ],
       "name": "t:names.footer",
       "settings": {
