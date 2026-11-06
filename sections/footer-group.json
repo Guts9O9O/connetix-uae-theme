@@ -80,7 +80,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Get exclusive deals and early access to new products.</p>",
+                "text": "<p>News about new sets and ranges.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",

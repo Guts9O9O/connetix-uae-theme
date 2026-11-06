@@ -17,6 +17,14 @@
           {%- liquid
             assign img = c.featured_image
             if img == blank
+              for prod in c.products limit: 12
+                if prod.metafields.custom.play_type.value == 'tiles' and prod.featured_image != blank
+                  assign img = prod.featured_image
+                  break
+                endif
+              endfor
+            endif
+            if img == blank
               assign img = c.products.first.featured_image
             endif
           -%}

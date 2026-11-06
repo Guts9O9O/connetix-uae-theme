@@ -79,18 +79,14 @@ html[lang='ar'] {
 
 /* ---------- Preview notice (password-protected client preview) ---------- */
 .px-preview-flag {
-  position: fixed;
-  inset-block-end: var(--px-space-3);
-  inset-inline-start: var(--px-space-3);
-  z-index: 50;
-  padding-block: var(--px-space-1);
-  padding-inline: var(--px-space-3);
-  border-radius: var(--px-radius-pill);
-  background: var(--px-ink);
-  color: var(--px-paper);
-  font-size: 0.75rem;
-  box-shadow: var(--px-shadow-2);
-  pointer-events: none;
+  margin: 0;
+  padding-block: 6px;
+  padding-inline: var(--page-margin, 16px);
+  background: var(--px-blush);
+  color: var(--px-ink);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
 }
 
 /* ---------- Motion safety net ---------- */
