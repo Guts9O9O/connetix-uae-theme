@@ -2117,5 +2117,21 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "CONNETIX UAE",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Client preview"
+      },
+      {
+        "type": "checkbox",
+        "id": "px_preview_flag",
+        "label": "Show 'preview store' label",
+        "info": "Small fixed label telling reviewers that products and prices are placeholders. Turn off before launch.",
+        "default": true
+      }
+    ]
   }
 ]

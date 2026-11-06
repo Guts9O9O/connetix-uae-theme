@@ -385,5 +385,51 @@
       "default_title": "العنوان الافتراضي",
       "sticky_add_to_cart": "شريط الإضافة السريعة إلى سلة التسوق"
     }
+  },
+  "px": {
+    "wordmark": "CONNETIX",
+    "preview_flag": "متجر تجريبي · المنتجات والأسعار للعرض فقط",
+    "vat_included": "الأسعار بالدرهم الإماراتي وتشمل ضريبة القيمة المضافة",
+    "age_plus": "للأعمار {{ age }}+",
+    "pieces": "{{ count }} قطعة",
+    "whats_in_the_box": "محتويات العلبة",
+    "sample_contents": "محتويات توضيحية. تؤكد العلامة التجارية المحتويات النهائية للعلبة.",
+    "contains_battery": "يحتوي على بطارية قابلة لإعادة الشحن",
+    "ranges": {
+      "rainbow": "قوس قزح",
+      "pastel": "باستيل",
+      "bright": "الألوان الزاهية",
+      "clear": "الشفافة",
+      "glitter": "اللامعة",
+      "light": "المضيئة",
+      "roads": "الطرق",
+      "pro": "برو"
+    },
+    "play_types": {
+      "tiles": "بلاطات مغناطيسية",
+      "ball-run": "مسارات الكرات",
+      "roads-transport": "الطرق والمركبات",
+      "accessory": "الإكسسوارات"
+    },
+    "shapes": {
+      "square": "مربع",
+      "large-square": "مربع كبير",
+      "equilateral-triangle": "مثلث متساوي الأضلاع",
+      "isosceles-triangle": "مثلث متساوي الساقين",
+      "right-triangle": "مثلث قائم الزاوية",
+      "rhombus": "معيّن",
+      "rectangle": "مستطيل",
+      "tube": "أنبوب مسار الكرات",
+      "ball": "كرة",
+      "vehicle-base": "قاعدة مركبة",
+      "door": "باب",
+      "window": "نافذة",
+      "portal-square": "مربع بوابة",
+      "light-tile": "بلاطة مضيئة",
+      "road-straight": "طريق مستقيم",
+      "road-curve": "طريق منحنٍ",
+      "road-junction": "تقاطع طرق",
+      "base-plate": "لوح قاعدة"
+    }
   }
 }

@@ -385,5 +385,51 @@
       "default_title": "Default Title",
       "sticky_add_to_cart": "Quick add to cart bar"
     }
+  },
+  "px": {
+    "wordmark": "CONNETIX",
+    "preview_flag": "Preview store · placeholder products and prices",
+    "vat_included": "Prices in AED, VAT included",
+    "age_plus": "Ages {{ age }}+",
+    "pieces": "{{ count }} pieces",
+    "whats_in_the_box": "What's in the box",
+    "sample_contents": "Sample contents. Final box contents to be confirmed by the brand.",
+    "contains_battery": "Contains a rechargeable battery",
+    "ranges": {
+      "rainbow": "Rainbow",
+      "pastel": "Pastel",
+      "bright": "Bright",
+      "clear": "Clear",
+      "glitter": "Glitter",
+      "light": "Light",
+      "roads": "Roads",
+      "pro": "Pro"
+    },
+    "play_types": {
+      "tiles": "Magnetic tiles",
+      "ball-run": "Ball runs",
+      "roads-transport": "Roads and transport",
+      "accessory": "Accessories"
+    },
+    "shapes": {
+      "square": "Square",
+      "large-square": "Large square",
+      "equilateral-triangle": "Equilateral triangle",
+      "isosceles-triangle": "Isosceles triangle",
+      "right-triangle": "Right-angle triangle",
+      "rhombus": "Rhombus",
+      "rectangle": "Rectangle",
+      "tube": "Ball-run tube",
+      "ball": "Ball",
+      "vehicle-base": "Vehicle base",
+      "door": "Door",
+      "window": "Window",
+      "portal-square": "Portal square",
+      "light-tile": "Light-up tile",
+      "road-straight": "Straight road",
+      "road-curve": "Curved road",
+      "road-junction": "Road junction",
+      "base-plate": "Base plate"
+    }
   }
 }

@@ -1,0 +1,106 @@
+/*
+ * CONNETIX UAE — base layer: Arabic typography, RTL helpers, focus, utilities.
+ * Rule: every custom rule uses logical properties (inline-start/end, block-start/end)
+ * so it works in both directions without [dir] overrides.
+ */
+
+/* ---------- Focus: thicker, always visible ---------- */
+:root {
+  --focus-outline-width: 3px;
+  --focus-outline-offset: 2px;
+}
+
+/* ---------- Arabic typography ---------- */
+html[lang='ar'] {
+  /* Arabic needs more vertical room for ascenders, dots and marks */
+  --line-height--display-tight: 1.2;
+  --line-height--display-normal: 1.3;
+  --line-height--display-loose: 1.4;
+  --line-height--heading-tight: 1.3;
+  --line-height--heading-normal: 1.4;
+  --line-height--heading-loose: 1.5;
+  --line-height--body-tight: 1.45;
+  --line-height--body-normal: 1.65;
+  --line-height--body-loose: 1.8;
+}
+
+/* Letter-spacing breaks Arabic joining; upper-casing has no meaning in Arabic */
+:lang(ar) {
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+/* Keep Latin brand names, SKUs, prices and numbers upright inside Arabic text */
+.px-ltr,
+:lang(ar) .px-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* ---------- Direction helpers ---------- */
+/* Mirror directional icons (arrows, chevrons) in RTL */
+[dir='rtl'] .px-flip-rtl {
+  transform: scaleX(-1);
+}
+
+/* ---------- Wordmark (text placeholder until the logo file arrives) ---------- */
+.header-logo {
+  --font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Colour world surface ---------- */
+.px-world {
+  background-color: var(--range-backdrop);
+  color: var(--range-ink);
+}
+
+/* ---------- Chips (range, filter, badge) ---------- */
+.px-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--px-space-1);
+  min-block-size: 28px;
+  padding-block: 2px;
+  padding-inline: var(--px-space-3);
+  border-radius: var(--px-radius-pill);
+  background: var(--px-white);
+  color: var(--px-ink);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.px-chip--accent {
+  background: var(--range-accent);
+  color: var(--range-ink);
+}
+
+/* ---------- Preview notice (password-protected client preview) ---------- */
+.px-preview-flag {
+  position: fixed;
+  inset-block-end: var(--px-space-3);
+  inset-inline-start: var(--px-space-3);
+  z-index: 50;
+  padding-block: var(--px-space-1);
+  padding-inline: var(--px-space-3);
+  border-radius: var(--px-radius-pill);
+  background: var(--px-ink);
+  color: var(--px-paper);
+  font-size: 0.75rem;
+  box-shadow: var(--px-shadow-2);
+  pointer-events: none;
+}
+
+/* ---------- Motion safety net ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

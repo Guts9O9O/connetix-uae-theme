@@ -23,6 +23,7 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-palette' -%}
+    {%- render 'px-head' -%}
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
@@ -154,6 +155,10 @@
     {% render 'theme-drawer' %}
 
     {% render 'search-modal' %}
+
+    {%- if settings.px_preview_flag -%}
+      <p class="px-preview-flag" role="note">{{ 'px.preview_flag' | t }}</p>
+    {%- endif -%}
 
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}

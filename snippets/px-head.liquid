@@ -1,0 +1,33 @@
+{%- doc -%}
+  CONNETIX UAE brand layer, rendered in <head> after Horizon's own variables.
+
+  - Arabic glyphs: self-hosted Rubik (OFL) Arabic subset, declared as "PX Arabic"
+    with an Arabic-only unicode-range and placed first in every font stack.
+    Latin characters fall through to the font chosen in theme settings.
+  - Loads the px token and base stylesheets.
+{%- enddoc -%}
+{%- liquid
+  assign px_ar_font_url = 'px-rubik-arabic.woff2' | asset_url
+-%}
+{%- if request.locale.iso_code == 'ar' -%}
+  <link rel="preload" href="{{ px_ar_font_url }}" as="font" type="font/woff2" crossorigin>
+{%- endif -%}
+{% style %}
+  @font-face {
+    font-family: 'PX Arabic';
+    src: url('{{ px_ar_font_url }}') format('woff2');
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+  }
+
+  :root {
+    --font-body--family: 'PX Arabic', {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-subheading--family: 'PX Arabic', {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
+    --font-heading--family: 'PX Arabic', {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-accent--family: 'PX Arabic', {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
+  }
+{% endstyle %}
+{{ 'px-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'px-base.css' | asset_url | stylesheet_tag }}

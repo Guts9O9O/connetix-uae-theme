@@ -1,0 +1,97 @@
+/*
+ * CONNETIX UAE — design tokens ("px" layer)
+ * Values are proposals pending brand guidelines (master plan §7.6).
+ * Horizon's own variables are set from theme settings; these tokens add
+ * the brand palette, shape, motion and range "colour worlds".
+ */
+
+:root {
+  /* Brand colour */
+  --px-ink: #18274f;          /* navy: text, primary buttons, footer */
+  --px-ink-soft: #27344f;     /* body text on light surfaces */
+  --px-paper: #f1f2ef;        /* page background */
+  --px-white: #ffffff;        /* raised surfaces */
+  --px-sky: #01b0ed;          /* accent fill — navy text only */
+  --px-coral: #ec5253;        /* gifts / sale accent — large text & UI only */
+  --px-plum: #683c86;         /* learn / checkout-adjacent accent */
+  --px-teal: #43bcca;
+  --px-lavender: #d0bdf3;
+  --px-blush: #fdd7e4;
+  --px-line: #7a8197;         /* 3.45:1 on paper — input and control borders */
+  --px-line-soft: rgb(24 39 79 / 0.12);
+
+  /* Shape */
+  --px-radius-input: 8px;
+  --px-radius-card: 16px;
+  --px-radius-panel: 24px;
+  --px-radius-pill: 999px;
+
+  /* Elevation (tinted, soft) */
+  --px-shadow-1: 0 1px 2px rgb(24 39 79 / 0.06), 0 2px 8px rgb(24 39 79 / 0.06);
+  --px-shadow-2: 0 4px 12px rgb(24 39 79 / 0.08), 0 12px 32px rgb(24 39 79 / 0.1);
+  /* Bevel highlight — echoes the tile's bevelled edge (surface treatment, not a shadow) */
+  --px-bevel: inset 0 1px 0 rgb(255 255 255 / 0.7), inset 0 -1px 0 rgb(24 39 79 / 0.04);
+
+  /* Spacing (4px base) */
+  --px-space-1: 4px;
+  --px-space-2: 8px;
+  --px-space-3: 12px;
+  --px-space-4: 16px;
+  --px-space-5: 24px;
+  --px-space-6: 32px;
+  --px-space-7: 48px;
+  --px-space-8: 64px;
+  --px-space-9: 96px;
+
+  /* Motion */
+  --px-d-xs: 120ms;
+  --px-d-s: 200ms;
+  --px-d-m: 320ms;
+  --px-d-l: 560ms;
+  --px-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --px-ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Writing direction as a number, for transforms that must mirror in RTL */
+  --px-dir: 1;
+
+  /* Default colour world (calm: paper + navy) */
+  --range-backdrop: var(--px-paper);
+  --range-ink: var(--px-ink);
+  --range-accent: var(--px-sky);
+}
+
+[dir='rtl'] {
+  --px-dir: -1;
+}
+
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    /* Light spring with a small overshoot — the "snap" of two magnets */
+    --px-ease-snap: linear(0, 0.2 9%, 0.62 21%, 0.94 33%, 1.07 43%, 1.09 50%, 1.05 62%, 0.99 79%, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --px-d-xs: 0ms;
+    --px-d-s: 0ms;
+    --px-d-m: 0ms;
+    --px-d-l: 0ms;
+  }
+}
+
+/*
+ * Range colour worlds.
+ * Any element with data-range="<handle>" (collection header, product page,
+ * product card) takes on its range's backdrop / ink / accent.
+ * Contrast (ink on backdrop) is ≥ 8.5:1 for every world; accents are used for
+ * large text and graphics only (≥ 3:1). Re-check when brand colours arrive.
+ */
+[data-range='rainbow'] { --range-backdrop: #fff1c7; --range-ink: var(--px-ink); --range-accent: var(--px-coral); }
+[data-range='pastel']  { --range-backdrop: var(--px-blush); --range-ink: var(--px-ink); --range-accent: var(--px-plum); }
+[data-range='bright']  { --range-backdrop: #cff0fc; --range-ink: var(--px-ink); --range-accent: #0b7fb0; }
+[data-range='clear']   { --range-backdrop: #ddf3f5; --range-ink: var(--px-ink); --range-accent: #1f8592; }
+[data-range='glitter'] { --range-backdrop: #eadffb; --range-ink: var(--px-ink); --range-accent: var(--px-plum); }
+[data-range='light']   { --range-backdrop: var(--px-ink); --range-ink: var(--px-paper); --range-accent: #ffd84d; }
+[data-range='roads']   { --range-backdrop: #e4e7ee; --range-ink: var(--px-ink); --range-accent: var(--px-ink); }
+[data-range='pro']     { --range-backdrop: var(--px-lavender); --range-ink: var(--px-ink); --range-accent: var(--px-ink); }
