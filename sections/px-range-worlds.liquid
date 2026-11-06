@@ -1,6 +1,6 @@
 {%- comment -%}
   Colour worlds: one card per range collection, each in its range colours, with the
-  collection image (or first product image) on a tinted stage.
+  collection image (or the first set with more than 20 pieces) on a tinted stage.
 {%- endcomment -%}
 <section class="px-worlds" aria-labelledby="PxWorldsTitle-{{ section.id }}">
   <div class="px-worlds__inner">
@@ -18,7 +18,7 @@
             assign img = c.featured_image
             if img == blank
               for prod in c.products limit: 12
-                if prod.metafields.custom.play_type.value == 'tiles' and prod.featured_image != blank
+                if prod.metafields.custom.piece_count.value > 20 and prod.featured_image != blank
                   assign img = prod.featured_image
                   break
                 endif

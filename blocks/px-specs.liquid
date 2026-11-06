@@ -4,8 +4,9 @@
 {%- enddoc -%}
 {%- liquid
   assign m = closest.product.metafields.custom
-  assign range = m.range.value
 -%}
+{%- capture range -%}{%- render 'px-range-of', product: closest.product -%}{%- endcapture -%}
+{%- assign range = range | strip -%}
 {%- if closest.product != blank -%}
   <section class="px-specs" aria-labelledby="PxSpecsTitle-{{ block.id }}" {{ block.shopify_attributes }}>
     <h2 class="px-specs__title" id="PxSpecsTitle-{{ block.id }}">{{ 'px.specs_title' | t }}</h2>

@@ -6,10 +6,11 @@
 {%- liquid
   assign p = closest.product
   assign m = p.metafields.custom
-  assign range = m.range.value
   assign pieces = m.piece_count.value
   assign age = m.age_min.value
 -%}
+{%- capture range -%}{%- render 'px-range-of', product: closest.product -%}{%- endcapture -%}
+{%- assign range = range | strip -%}
 {%- if p != blank -%}
   <div
     class="px-meta px-meta--{{ block.settings.size }}"

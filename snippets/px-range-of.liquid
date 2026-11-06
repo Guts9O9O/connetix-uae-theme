@@ -1,0 +1,31 @@
+{%- doc -%}
+  Outputs the range handle (e.g. "rainbow") for a product, locale-proof.
+  Reads the "range-<handle>" tag first (tags are never translated), then falls back to
+  the custom.range metafield only if its value is a known handle (the metafield value
+  may be machine-translated in other languages).
+
+  @param {product} product - the product
+
+  @example
+  {% capture range %}{% render 'px-range-of', product: product %}{% endcapture %}
+{%- enddoc -%}
+{%- liquid
+  assign known = 'rainbow,pastel,bright,clear,glitter,light,roads,pro' | split: ','
+  assign px_range = ''
+  for tag in product.tags
+    if tag contains 'range-'
+      assign candidate = tag | remove_first: 'range-' | strip
+      if known contains candidate
+        assign px_range = candidate
+        break
+      endif
+    endif
+  endfor
+  if px_range == blank
+    assign mf = product.metafields.custom.range.value | strip
+    if known contains mf
+      assign px_range = mf
+    endif
+  endif
+  echo px_range
+-%}

@@ -7,8 +7,9 @@
 {%- liquid
   assign p = closest.product
   assign data = p.metafields.custom.box_contents.value
-  assign range = p.metafields.custom.range.value
 -%}
+{%- capture range -%}{%- render 'px-range-of', product: closest.product -%}{%- endcapture -%}
+{%- assign range = range | strip -%}
 {%- if data.lines.size > 0 -%}
   <section
     class="px-box"
