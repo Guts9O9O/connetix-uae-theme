@@ -104,3 +104,50 @@ html[lang='ar'] {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------- Snap-to-cart ---------- */
+/* Horizon's fly-to-cart element, restyled as a tumbling tile */
+html fly-to-cart {
+  border-radius: 10px !important;
+  outline: 3px solid rgb(255 255 255 / 0.9);
+  box-shadow: 0 6px 16px rgb(24 39 79 / 0.25);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html fly-to-cart {
+    rotate: 0deg;
+    animation-name: travel-x, travel-y, travel-scale, px-tumble;
+    animation-timing-function: var(--x-timing), var(--y-timing), var(--scale-timing), linear;
+  }
+
+  .header-actions__cart-icon.px-snap {
+    animation: px-snap 420ms var(--px-ease-snap);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html fly-to-cart {
+    display: none;
+  }
+}
+
+@keyframes px-tumble {
+  to {
+    rotate: calc(180deg * var(--px-dir));
+  }
+}
+
+@keyframes px-snap {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.22);
+  }
+  65% {
+    transform: scale(0.94);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
