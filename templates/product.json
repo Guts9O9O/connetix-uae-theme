@@ -240,14 +240,44 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "px_meta": {
+              "type": "px-product-meta",
+              "settings": {
+                "size": "regular",
+                "show_subtitle": true,
+                "show_range": true,
+                "show_pieces": true,
+                "show_age": true
+              },
+              "blocks": {}
+            },
+            "px_box": {
+              "type": "px-box-contents",
+              "settings": {},
+              "blocks": {}
+            },
+            "px_specs": {
+              "type": "px-specs",
+              "settings": {},
+              "blocks": {}
+            },
+            "px_safety": {
+              "type": "px-safety",
+              "settings": {},
+              "blocks": {}
             }
           },
           "block_order": [
             "group_icgrde",
+            "px_meta",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "text_aEtTtq"
+            "px_box",
+            "text_aEtTtq",
+            "px_specs",
+            "px_safety"
           ]
         },
         "disclosures": {

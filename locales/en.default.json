@@ -391,7 +391,7 @@
     "preview_flag": "Preview store · placeholder products and prices",
     "vat_included": "Prices in AED, VAT included",
     "age_plus": "Ages {{ age }}+",
-    "pieces": "{{ count }} pieces",
+    "pieces": "{{ pieces }} pieces",
     "whats_in_the_box": "What's in the box",
     "sample_contents": "Sample contents. Final box contents to be confirmed by the brand.",
     "contains_battery": "Contains a rechargeable battery",
@@ -431,6 +431,22 @@
       "road-junction": "Road junction",
       "base-plate": "Base plate"
     },
-    "language": "Language"
+    "language": "Language",
+    "range_label": "{{ range }} range",
+    "safety_title": "Safety information",
+    "specs_title": "Specifications",
+    "specs": {
+      "pieces": "Pieces",
+      "age": "Age",
+      "range": "Range",
+      "box": "Box size",
+      "materials": "Materials",
+      "battery": "Battery",
+      "yes": "Yes",
+      "no": "No",
+      "age_value": "{{ age }}+ years"
+    },
+    "explore_ranges": "Explore the ranges",
+    "products_count": "{{ count_text }} products"
   }
 }

@@ -1,0 +1,71 @@
+{%- doc -%}
+  Product safety panel: the warnings metafield (custom.warnings), always visible
+  (not collapsed) so choking-hazard and magnet warnings are seen before purchase.
+{%- enddoc -%}
+{%- assign warnings = closest.product.metafields.custom.warnings -%}
+{%- if warnings != blank -%}
+  <section class="px-safety" aria-labelledby="PxSafetyTitle-{{ block.id }}" {{ block.shopify_attributes }}>
+    <div class="px-safety__head">
+      <svg class="px-safety__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3 22 20H2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M12 10v4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="17.2" r="1.2" fill="currentColor"/>
+      </svg>
+      <h2 class="px-safety__title" id="PxSafetyTitle-{{ block.id }}">{{ 'px.safety_title' | t }}</h2>
+    </div>
+    <div class="px-safety__body">{{ warnings.value | escape | newline_to_br }}</div>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .px-safety {
+    padding: var(--px-space-4, 16px) var(--px-space-5, 24px);
+    border-radius: var(--px-radius-card, 16px);
+    border-inline-start: 4px solid var(--px-coral);
+    background: var(--px-white);
+    color: var(--px-ink);
+  }
+
+  .px-safety__head {
+    display: flex;
+    align-items: center;
+    gap: var(--px-space-2, 8px);
+    margin-block-end: var(--px-space-2, 8px);
+  }
+
+  .px-safety__icon {
+    inline-size: 22px;
+    block-size: 22px;
+    flex: none;
+    color: var(--px-ink);
+  }
+
+  .px-safety__title {
+    margin: 0;
+    font-size: 1.0625rem;
+    color: var(--px-ink);
+  }
+
+  .px-safety__body {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Safety information",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the product's 'Safety warnings' metafield. Keep this visible on every toy product."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Safety information"
+    }
+  ]
+}
+{% endschema %}

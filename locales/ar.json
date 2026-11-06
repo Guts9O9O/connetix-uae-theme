@@ -390,8 +390,8 @@
     "wordmark": "CONNETIX",
     "preview_flag": "متجر تجريبي · المنتجات والأسعار للعرض فقط",
     "vat_included": "الأسعار بالدرهم الإماراتي وتشمل ضريبة القيمة المضافة",
-    "age_plus": "للأعمار {{ age }}+",
-    "pieces": "{{ count }} قطعة",
+    "age_plus": "العمر: {{ age }}+ سنوات",
+    "pieces": "عدد القطع: {{ pieces }}",
     "whats_in_the_box": "محتويات العلبة",
     "sample_contents": "محتويات توضيحية. تؤكد العلامة التجارية المحتويات النهائية للعلبة.",
     "contains_battery": "يحتوي على بطارية قابلة لإعادة الشحن",
@@ -431,6 +431,22 @@
       "road-junction": "تقاطع طرق",
       "base-plate": "لوح قاعدة"
     },
-    "language": "اللغة"
+    "language": "اللغة",
+    "range_label": "مجموعة {{ range }}",
+    "safety_title": "معلومات السلامة",
+    "specs_title": "المواصفات",
+    "specs": {
+      "pieces": "عدد القطع",
+      "age": "العمر",
+      "range": "المجموعة",
+      "box": "أبعاد العلبة",
+      "materials": "المواد",
+      "battery": "البطارية",
+      "yes": "نعم",
+      "no": "لا",
+      "age_value": "{{ age }}+ سنوات"
+    },
+    "explore_ranges": "استكشف المجموعات",
+    "products_count": "عدد المنتجات: {{ count_text }}"
   }
 }

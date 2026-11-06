@@ -1,0 +1,213 @@
+{%- comment -%}
+  Collection header in the collection's "colour world".
+  A range collection (handle = rainbow, pastel, bright, clear, light, roads) takes its
+  range colours; any other collection uses the calm default (paper + navy).
+  Optional chip row linking to every range collection.
+{%- endcomment -%}
+{%- liquid
+  assign c = collection
+  assign range_handles = section.settings.range_handles | remove: ' ' | split: ','
+  assign range = ''
+  if range_handles contains c.handle
+    assign range = c.handle
+  endif
+-%}
+<section
+  class="px-chero px-world"
+  {% if range != blank %}
+    data-range="{{ range }}"
+  {% endif %}
+  aria-labelledby="PxCollectionTitle-{{ section.id }}"
+>
+  <div class="px-chero__inner">
+    {%- if range != blank -%}
+      {%- assign range_key = 'px.ranges.' | append: range -%}
+      {%- assign range_name = range_key | t -%}
+      <p class="px-chero__eyebrow">
+        <span class="px-chip__dot" aria-hidden="true"></span>
+        {{- 'px.range_label' | t: range: range_name -}}
+      </p>
+    {%- endif -%}
+    <h1 class="px-chero__title" id="PxCollectionTitle-{{ section.id }}">{{ c.title | escape }}</h1>
+    {%- if section.settings.show_description and c.description != blank -%}
+      <div class="px-chero__desc">{{ c.description }}</div>
+    {%- endif -%}
+    {%- if c.products_count > 0 -%}
+      <p class="px-chero__count">{{ 'px.products_count' | t: count_text: c.products_count }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.show_range_links -%}
+      <nav class="px-chero__ranges" aria-label="{{ 'px.explore_ranges' | t }}">
+        <ul role="list">
+          {%- for h in range_handles -%}
+            {%- assign rc = collections[h] -%}
+            {%- if rc != blank and rc.products_count > 0 -%}
+              <li data-range="{{ h }}">
+                <a
+                  class="px-chero__range"
+                  href="{{ rc.url }}"
+                  {% if h == c.handle %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  <span class="px-chip__dot" aria-hidden="true"></span>
+                  {{- rc.title | escape -}}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .px-chero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(32px, 6vw, 72px) clamp(24px, 4vw, 48px);
+    padding-inline: var(--page-margin, 16px);
+  }
+
+  /* Soft tile motif in the corner — CSS only, mirrors in RTL */
+  .px-chero::after {
+    content: '';
+    position: absolute;
+    inset-block-start: -40px;
+    inset-inline-end: -40px;
+    inline-size: clamp(160px, 26vw, 320px);
+    aspect-ratio: 1;
+    border-radius: 28px;
+    background: var(--range-accent);
+    opacity: 0.18;
+    transform: rotate(calc(18deg * var(--px-dir, 1)));
+    pointer-events: none;
+  }
+
+  .px-chero__inner {
+    position: relative;
+    z-index: 1;
+    max-inline-size: var(--page-content-width, 1200px);
+    margin-inline: auto;
+    display: grid;
+    gap: var(--px-space-3, 12px);
+  }
+
+  .px-chero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--px-space-2, 8px);
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .px-chero .px-chip__dot {
+    inline-size: 10px;
+    block-size: 10px;
+    border-radius: 3px;
+    background: var(--range-accent);
+    box-shadow: 0 0 0 1px rgb(24 39 79 / 0.25);
+    transform: rotate(45deg);
+  }
+
+  .px-chero__title {
+    margin: 0;
+    color: inherit;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+  }
+
+  .px-chero__desc {
+    max-inline-size: 60ch;
+    font-size: 1.0625rem;
+  }
+
+  .px-chero__desc > :first-child {
+    margin-block-start: 0;
+  }
+
+  .px-chero__count {
+    margin: 0;
+    font-size: 0.875rem;
+    opacity: 0.85;
+  }
+
+  .px-chero__ranges ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--px-space-2, 8px);
+    margin: var(--px-space-3, 12px) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .px-chero__range {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--px-space-2, 8px);
+    min-block-size: 40px;
+    padding-inline: var(--px-space-4, 16px);
+    border-radius: var(--px-radius-pill, 999px);
+    background: var(--px-white);
+    color: var(--px-ink);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: var(--px-shadow-1);
+  }
+
+  .px-chero__range[aria-current='page'] {
+    background: var(--px-ink);
+    color: var(--px-paper);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .px-chero__range {
+      transition: transform var(--px-d-s) var(--px-ease-snap), box-shadow var(--px-d-s) var(--px-ease-standard);
+    }
+
+    .px-chero__range:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--px-shadow-2);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection colour header",
+  "tag": "div",
+  "class": "px-chero-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "range_handles",
+      "label": "Range collection handles",
+      "info": "Comma-separated. These collections get their range colours and appear in the range links.",
+      "default": "rainbow,pastel,bright,clear,light,roads"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_range_links",
+      "label": "Show range links",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection colour header"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["collection"]
+  }
+}
+{% endschema %}

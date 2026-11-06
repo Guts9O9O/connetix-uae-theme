@@ -1,0 +1,105 @@
+{%- doc -%}
+  Specifications list from product metafields: pieces, age, range, box size, materials, battery.
+  Rows without data are skipped.
+{%- enddoc -%}
+{%- liquid
+  assign m = closest.product.metafields.custom
+  assign range = m.range.value
+-%}
+{%- if closest.product != blank -%}
+  <section class="px-specs" aria-labelledby="PxSpecsTitle-{{ block.id }}" {{ block.shopify_attributes }}>
+    <h2 class="px-specs__title" id="PxSpecsTitle-{{ block.id }}">{{ 'px.specs_title' | t }}</h2>
+    <dl class="px-specs__list">
+      {%- if m.piece_count != blank -%}
+        <div class="px-specs__row">
+          <dt>{{ 'px.specs.pieces' | t }}</dt>
+          <dd><bdi>{{ m.piece_count.value }}</bdi></dd>
+        </div>
+      {%- endif -%}
+      {%- if m.age_min != blank -%}
+        <div class="px-specs__row">
+          <dt>{{ 'px.specs.age' | t }}</dt>
+          <dd>{{ 'px.specs.age_value' | t: age: m.age_min.value }}</dd>
+        </div>
+      {%- endif -%}
+      {%- if range != blank -%}
+        {%- assign range_key = 'px.ranges.' | append: range -%}
+        <div class="px-specs__row">
+          <dt>{{ 'px.specs.range' | t }}</dt>
+          <dd>{{ range_key | t }}</dd>
+        </div>
+      {%- endif -%}
+      {%- if m.box_dimensions != blank -%}
+        <div class="px-specs__row">
+          <dt>{{ 'px.specs.box' | t }}</dt>
+          <dd><bdi>{{ m.box_dimensions.value | escape }}</bdi></dd>
+        </div>
+      {%- endif -%}
+      {%- if m.materials != blank -%}
+        <div class="px-specs__row">
+          <dt>{{ 'px.specs.materials' | t }}</dt>
+          <dd>{{ m.materials.value | escape | newline_to_br }}</dd>
+        </div>
+      {%- endif -%}
+      {%- if m.contains_battery != blank -%}
+        <div class="px-specs__row">
+          <dt>{{ 'px.specs.battery' | t }}</dt>
+          <dd>
+            {%- if m.contains_battery.value -%}
+              {{ 'px.contains_battery' | t }}
+            {%- else -%}
+              {{ 'px.specs.no' | t }}
+            {%- endif -%}
+          </dd>
+        </div>
+      {%- endif -%}
+    </dl>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .px-specs__title {
+    margin: 0 0 var(--px-space-3, 12px);
+    font-size: 1.25rem;
+  }
+
+  .px-specs__list {
+    margin: 0;
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
+  }
+
+  .px-specs__row {
+    display: grid;
+    grid-template-columns: minmax(110px, 34%) 1fr;
+    gap: var(--px-space-4, 16px);
+    padding-block: var(--px-space-3, 12px);
+    border-block-end: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
+  }
+
+  .px-specs__row dt {
+    font-weight: 500;
+  }
+
+  .px-specs__row dd {
+    margin: 0;
+    color: rgb(var(--color-foreground-rgb) / 0.88);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Specifications",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows piece count, age, range, box size, materials and battery from product metafields."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Specifications"
+    }
+  ]
+}
+{% endschema %}

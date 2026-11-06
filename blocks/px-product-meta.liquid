@@ -1,0 +1,137 @@
+{%- doc -%}
+  Range chip, piece count, age and (optionally) the subtitle for the closest product.
+  Reads product metafields custom.range, custom.piece_count, custom.age_min, custom.subtitle.
+  Used on the product page and inside product cards.
+{%- enddoc -%}
+{%- liquid
+  assign p = closest.product
+  assign m = p.metafields.custom
+  assign range = m.range.value
+  assign pieces = m.piece_count.value
+  assign age = m.age_min.value
+-%}
+{%- if p != blank -%}
+  <div
+    class="px-meta px-meta--{{ block.settings.size }}"
+    {% if range != blank %}
+      data-range="{{ range | escape }}"
+    {% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.show_subtitle and m.subtitle != blank -%}
+      <p class="px-meta__subtitle">{{ m.subtitle.value | escape }}</p>
+    {%- endif -%}
+    <ul class="px-meta__chips" role="list">
+      {%- if block.settings.show_range and range != blank -%}
+        {%- assign range_key = 'px.ranges.' | append: range -%}
+        {%- assign range_name = range_key | t -%}
+        <li class="px-chip px-chip--range">
+          <span class="px-chip__dot" aria-hidden="true"></span>
+          {{- 'px.range_label' | t: range: range_name -}}
+        </li>
+      {%- endif -%}
+      {%- if block.settings.show_pieces and pieces != blank -%}
+        <li class="px-chip">{{ 'px.pieces' | t: pieces: pieces }}</li>
+      {%- endif -%}
+      {%- if block.settings.show_age and age != blank -%}
+        <li class="px-chip">{{ 'px.age_plus' | t: age: age }}</li>
+      {%- endif -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .px-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--px-space-2, 8px);
+  }
+
+  .px-meta__subtitle {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    color: rgb(var(--color-foreground-rgb) / 0.85);
+  }
+
+  .px-meta__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--px-space-2, 8px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .px-meta .px-chip {
+    background: rgb(var(--color-foreground-rgb) / 0.06);
+    color: var(--color-foreground);
+  }
+
+  .px-chip--range .px-chip__dot {
+    inline-size: 10px;
+    block-size: 10px;
+    border-radius: 3px;
+    background: var(--range-accent);
+    box-shadow: 0 0 0 1px rgb(24 39 79 / 0.25);
+    transform: rotate(45deg);
+  }
+
+  .px-meta--small .px-chip {
+    min-block-size: 24px;
+    padding-inline: var(--px-space-2, 8px);
+    font-size: 0.75rem;
+  }
+
+  .px-meta--small .px-meta__chips {
+    gap: var(--px-space-1, 4px);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product highlights",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Size",
+      "options": [
+        { "value": "regular", "label": "Regular" },
+        { "value": "small", "label": "Small (cards)" }
+      ],
+      "default": "regular"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subtitle",
+      "label": "Show subtitle",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_range",
+      "label": "Show range",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pieces",
+      "label": "Show piece count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_age",
+      "label": "Show age",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product highlights"
+    }
+  ]
+}
+{% endschema %}

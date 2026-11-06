@@ -1,0 +1,179 @@
+{%- doc -%}
+  "What's in the box": a visual grid of tile shapes with quantities, from the
+  product's custom.box_contents JSON metafield:
+  {"sample": true, "lines": [{"shape": "square", "qty": 24}, ...]}
+  Shape names come from locale keys px.shapes.<shape>.
+{%- enddoc -%}
+{%- liquid
+  assign p = closest.product
+  assign data = p.metafields.custom.box_contents.value
+  assign range = p.metafields.custom.range.value
+-%}
+{%- if data.lines.size > 0 -%}
+  <section
+    class="px-box"
+    {% if range != blank %}
+      data-range="{{ range | escape }}"
+    {% endif %}
+    aria-labelledby="PxBoxTitle-{{ block.id }}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="px-box__head">
+      <h2 class="px-box__title" id="PxBoxTitle-{{ block.id }}">{{ 'px.whats_in_the_box' | t }}</h2>
+      {%- if p.metafields.custom.piece_count != blank -%}
+        <span class="px-box__total">{{ 'px.pieces' | t: pieces: p.metafields.custom.piece_count.value }}</span>
+      {%- endif -%}
+    </div>
+    <ul class="px-box__grid" role="list">
+      {%- for line in data.lines -%}
+        {%- assign shape_key = 'px.shapes.' | append: line.shape -%}
+        <li class="px-box__item">
+          <span class="px-box__icon">{% render 'px-shape-icon', shape: line.shape %}</span>
+          <span class="px-box__qty"><bdi>×{{ line.qty }}</bdi></span>
+          <span class="px-box__name">{{ shape_key | t }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- if data.sample -%}
+      <p class="px-box__note">{{ 'px.sample_contents' | t }}</p>
+    {%- endif -%}
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .px-box {
+    padding: var(--px-space-5, 24px);
+    border-radius: var(--px-radius-panel, 24px);
+    background: var(--range-backdrop);
+    color: var(--range-ink);
+    box-shadow: var(--px-bevel);
+  }
+
+  .px-box__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--px-space-2, 8px);
+    margin-block-end: var(--px-space-4, 16px);
+  }
+
+  .px-box__title {
+    margin: 0;
+    font-size: 1.25rem;
+    color: inherit;
+  }
+
+  .px-box__total {
+    font-size: 0.875rem;
+    opacity: 0.85;
+  }
+
+  .px-box__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: var(--px-space-3, 12px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .px-box__item {
+    display: grid;
+    justify-items: center;
+    gap: var(--px-space-1, 4px);
+    padding: var(--px-space-3, 12px) var(--px-space-2, 8px);
+    border-radius: var(--px-radius-card, 16px);
+    background: rgb(255 255 255 / 0.6);
+    text-align: center;
+  }
+
+  [data-range='light'] .px-box__item {
+    background: rgb(255 255 255 / 0.08);
+  }
+
+  .px-box__icon {
+    inline-size: 48px;
+    block-size: 48px;
+  }
+
+  .px-box__qty {
+    font-weight: 700;
+    font-size: 1.0625rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .px-box__name {
+    font-size: 0.8125rem;
+    line-height: 1.3;
+  }
+
+  .px-box__note {
+    margin: var(--px-space-4, 16px) 0 0;
+    font-size: 0.8125rem;
+    opacity: 0.85;
+  }
+
+  .px-shape {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .px-shape__body {
+    fill: var(--range-accent);
+    fill-opacity: 0.78;
+    stroke: var(--px-ink);
+  }
+
+  .px-shape--ink .px-shape__body {
+    fill: var(--px-ink-soft);
+    fill-opacity: 1;
+  }
+
+  [data-range='light'] .px-shape__body {
+    stroke: var(--px-paper);
+  }
+
+  .px-shape__hole {
+    fill: var(--range-backdrop);
+    stroke: var(--px-ink);
+  }
+
+  .px-shape__ink {
+    fill: var(--px-ink);
+  }
+
+  .px-shape__ink-line,
+  .px-shape__ink-stroke {
+    stroke: var(--px-ink);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .px-box__item {
+      transition: transform var(--px-d-s) var(--px-ease-snap);
+    }
+
+    .px-box__item:hover {
+      transform: translateY(-2px);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "What's in the box",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the shapes and quantities from the product's 'Box contents' metafield."
+    }
+  ],
+  "presets": [
+    {
+      "name": "What's in the box"
+    }
+  ]
+}
+{% endschema %}
