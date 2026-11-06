@@ -1,0 +1,206 @@
+{%- comment -%}
+  Pack finder: a few "where to start" paths (first set, bigger builds, ball runs, gifts),
+  each linking to a collection. No quiz, no JavaScript.
+{%- endcomment -%}
+<section class="px-finder" aria-labelledby="PxFinderTitle-{{ section.id }}">
+  <div class="px-finder__inner">
+    <div class="px-finder__head">
+      <h2 class="px-finder__title" id="PxFinderTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="px-finder__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+    </div>
+    <ol class="px-finder__list" role="list">
+      {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        <li class="px-finder__item" data-range="{{ block.settings.range }}" {{ block.shopify_attributes }}>
+          <a class="px-finder__card" href="{{ c.url | default: routes.all_products_collection_url }}">
+            <span class="px-finder__step" aria-hidden="true">
+              {%- render 'px-shape-icon', shape: block.settings.shape -%}
+            </span>
+            <span class="px-finder__label">{{ block.settings.label | escape }}</span>
+            <span class="px-finder__hint">{{ block.settings.hint | escape }}</span>
+            <span class="px-finder__go">
+              {{- block.settings.cta | escape -}}
+              <svg class="px-flip-rtl" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% stylesheet %}
+  .px-finder {
+    padding-block: clamp(40px, 6vw, 80px);
+    padding-inline: var(--page-margin, 16px);
+    background: var(--px-white);
+  }
+
+  .px-finder__inner {
+    max-inline-size: var(--page-content-width, 1200px);
+    margin-inline: auto;
+  }
+
+  .px-finder__head {
+    display: grid;
+    gap: var(--px-space-2, 8px);
+    margin-block-end: var(--px-space-6, 32px);
+  }
+
+  .px-finder__title {
+    margin: 0;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  }
+
+  .px-finder__text {
+    margin: 0;
+    max-inline-size: 56ch;
+    font-size: 1.0625rem;
+  }
+
+  .px-finder__list {
+    display: grid;
+    gap: var(--px-space-4, 16px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .px-finder__list {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--px-space-5, 24px);
+    }
+  }
+
+  .px-finder__card {
+    display: grid;
+    align-content: start;
+    gap: var(--px-space-2, 8px);
+    block-size: 100%;
+    padding: var(--px-space-5, 24px);
+    border-radius: var(--px-radius-panel, 24px);
+    background: var(--range-backdrop);
+    color: var(--range-ink);
+    text-decoration: none;
+    box-shadow: var(--px-bevel);
+  }
+
+  .px-finder__step {
+    inline-size: 56px;
+    block-size: 56px;
+    margin-block-end: var(--px-space-2, 8px);
+  }
+
+  .px-finder__label {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .px-finder__hint {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+
+  .px-finder__go {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--px-space-2, 8px);
+    margin-block-start: var(--px-space-3, 12px);
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .px-finder__card {
+      transition: transform var(--px-d-m) var(--px-ease-snap);
+    }
+
+    .px-finder__card:hover {
+      transform: translateY(-4px);
+    }
+
+    .px-finder__go svg {
+      transition: translate var(--px-d-s) var(--px-ease-standard);
+    }
+
+    .px-finder__card:hover .px-finder__go svg {
+      translate: calc(3px * var(--px-dir, 1)) 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Pack finder",
+  "tag": "div",
+  "class": "px-finder-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Where to start"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Pick a path. Every set connects with every other, so you can always add more."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "path",
+      "name": "Path",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "First set" },
+        { "type": "text", "id": "hint", "label": "Hint", "default": "Smaller packs for first builders." },
+        { "type": "text", "id": "cta", "label": "Link text", "default": "Shop" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        {
+          "type": "select",
+          "id": "shape",
+          "label": "Icon",
+          "options": [
+            { "value": "square", "label": "Square" },
+            { "value": "equilateral-triangle", "label": "Triangle" },
+            { "value": "rhombus", "label": "Rhombus" },
+            { "value": "ball", "label": "Ball" },
+            { "value": "portal-square", "label": "Portal square" },
+            { "value": "large-square", "label": "Large square" }
+          ],
+          "default": "square"
+        },
+        {
+          "type": "select",
+          "id": "range",
+          "label": "Colour world",
+          "options": [
+            { "value": "rainbow", "label": "Rainbow" },
+            { "value": "pastel", "label": "Pastel" },
+            { "value": "bright", "label": "Bright" },
+            { "value": "clear", "label": "Clear" },
+            { "value": "glitter", "label": "Glitter" },
+            { "value": "pro", "label": "Pro" }
+          ],
+          "default": "rainbow"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Pack finder",
+      "blocks": [
+        { "type": "path", "settings": { "label": "First set", "hint": "Smaller packs for first builders.", "cta": "Shop starter sets", "collection": "starter-sets", "shape": "square", "range": "pastel" } },
+        { "type": "path", "settings": { "label": "Bigger builds", "hint": "100+ pieces for towers, castles and whole cities.", "cta": "Shop large sets", "collection": "large-sets", "shape": "large-square", "range": "bright" } },
+        { "type": "path", "settings": { "label": "Ball runs", "hint": "Tubes and balls for tracks that twist and drop.", "cta": "Shop ball runs", "collection": "ball-runs", "shape": "ball", "range": "rainbow" } },
+        { "type": "path", "settings": { "label": "A gift", "hint": "Gift-ready packs, including picks under AED 300.", "cta": "Shop gifts", "collection": "gifts", "shape": "rhombus", "range": "glitter" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

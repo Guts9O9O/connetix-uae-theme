@@ -1,0 +1,222 @@
+{%- comment -%}
+  Colour worlds: one card per range collection, each in its range colours, with the
+  collection image (or first product image) on a tinted stage.
+{%- endcomment -%}
+<section class="px-worlds" aria-labelledby="PxWorldsTitle-{{ section.id }}">
+  <div class="px-worlds__inner">
+    <div class="px-worlds__head">
+      <h2 class="px-worlds__title" id="PxWorldsTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="px-worlds__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+    </div>
+    <ul class="px-worlds__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        {%- if c != blank -%}
+          {%- liquid
+            assign img = c.featured_image
+            if img == blank
+              assign img = c.products.first.featured_image
+            endif
+          -%}
+          <li class="px-world-card" data-range="{{ block.settings.range }}" {{ block.shopify_attributes }}>
+            <a class="px-world-card__link" href="{{ c.url }}">
+              <span class="px-world-card__stage">
+                {%- if img != blank -%}
+                  {{ img | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw', alt: '', class: 'px-world-card__img' }}
+                {%- endif -%}
+              </span>
+              <span class="px-world-card__body">
+                <span class="px-world-card__name">{{ c.title | escape }}</span>
+                <span class="px-world-card__count">{{ 'px.products_count' | t: count_text: c.products_count }}</span>
+              </span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% stylesheet %}
+  .px-worlds {
+    padding-block: clamp(40px, 6vw, 80px);
+    padding-inline: var(--page-margin, 16px);
+  }
+
+  .px-worlds__inner {
+    max-inline-size: var(--page-content-width, 1200px);
+    margin-inline: auto;
+  }
+
+  .px-worlds__head {
+    display: grid;
+    gap: var(--px-space-2, 8px);
+    margin-block-end: var(--px-space-6, 32px);
+  }
+
+  .px-worlds__title {
+    margin: 0;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  }
+
+  .px-worlds__text {
+    margin: 0;
+    max-inline-size: 56ch;
+    font-size: 1.0625rem;
+  }
+
+  .px-worlds__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--px-space-4, 16px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .px-worlds__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--px-space-5, 24px);
+    }
+  }
+
+  .px-world-card__link {
+    display: grid;
+    block-size: 100%;
+    border-radius: var(--px-radius-panel, 24px);
+    overflow: hidden;
+    background: var(--range-backdrop);
+    color: var(--range-ink);
+    text-decoration: none;
+    box-shadow: var(--px-bevel), var(--px-shadow-1);
+  }
+
+  .px-world-card__stage {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .px-world-card__stage::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 14%;
+    inset-inline-start: 50%;
+    inline-size: 46%;
+    aspect-ratio: 1;
+    border-radius: 18px;
+    background: var(--range-accent);
+    opacity: 0.22;
+    transform: translateX(calc(-50% * var(--px-dir, 1))) rotate(calc(12deg * var(--px-dir, 1)));
+  }
+
+  .px-world-card__img {
+    position: relative;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .px-world-card__body {
+    display: grid;
+    gap: 2px;
+    padding: var(--px-space-4, 16px) var(--px-space-5, 24px) var(--px-space-5, 24px);
+  }
+
+  .px-world-card__name {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .px-world-card__count {
+    font-size: 0.875rem;
+    opacity: 0.85;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .px-world-card__link {
+      transition: transform var(--px-d-m) var(--px-ease-snap), box-shadow var(--px-d-m) var(--px-ease-standard);
+    }
+
+    .px-world-card__img {
+      transition: transform var(--px-d-l) var(--px-ease-standard);
+    }
+
+    .px-world-card__link:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--px-bevel), var(--px-shadow-2);
+    }
+
+    .px-world-card__link:hover .px-world-card__img {
+      transform: scale(1.04);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Colour worlds",
+  "tag": "div",
+  "class": "px-worlds-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pick a colour world"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Every range has its own palette. Mix them for even more colours."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "range",
+      "name": "Range",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "select",
+          "id": "range",
+          "label": "Colour world",
+          "options": [
+            { "value": "rainbow", "label": "Rainbow" },
+            { "value": "pastel", "label": "Pastel" },
+            { "value": "bright", "label": "Bright" },
+            { "value": "clear", "label": "Clear" },
+            { "value": "glitter", "label": "Glitter" },
+            { "value": "light", "label": "Light" },
+            { "value": "roads", "label": "Roads" },
+            { "value": "pro", "label": "Pro" }
+          ],
+          "default": "rainbow"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Colour worlds",
+      "blocks": [
+        { "type": "range", "settings": { "collection": "rainbow", "range": "rainbow" } },
+        { "type": "range", "settings": { "collection": "pastel", "range": "pastel" } },
+        { "type": "range", "settings": { "collection": "bright", "range": "bright" } },
+        { "type": "range", "settings": { "collection": "clear", "range": "clear" } },
+        { "type": "range", "settings": { "collection": "light", "range": "light" } },
+        { "type": "range", "settings": { "collection": "roads", "range": "roads" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

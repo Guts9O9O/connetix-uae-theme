@@ -9,85 +9,6 @@
  */
 {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "{{ settings.color_palette.background }}",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0, 0, 0, 0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
-      }
-    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -245,18 +166,30 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "px_meta": {
+              "type": "px-product-meta",
+              "settings": {
+                "size": "small",
+                "show_subtitle": false,
+                "show_range": true,
+                "show_pieces": true,
+                "show_age": false
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "product_card_gallery_677WP3",
             "product_title_YXxMTj",
+            "px_meta",
             "price_JQzVV4"
           ]
         }
       },
       "name": "t:names.featured_collection",
       "settings": {
-        "collection": "all",
+        "collection": "best-sellers",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -273,10 +206,189 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "px_hero": {
+      "type": "px-hero-lighttable",
+      "settings": {
+        "eyebrow": "Magnetic tiles",
+        "heading": "Build it in colour",
+        "text": "<p>Translucent magnetic tiles that click together for open-ended play. Placeholder copy — replace with brand-approved text.</p>",
+        "button_1_label": "Shop by range",
+        "button_1_link": "shopify://collections/all",
+        "button_2_label": "Find a gift",
+        "button_2_link": "shopify://collections/gifts"
+      }
+    },
+    "px_trust": {
+      "type": "px-trust-strip",
+      "settings": {
+        "label": "Why shop with us"
+      },
+      "blocks": {
+        "t1": {
+          "type": "item",
+          "settings": {
+            "icon": "currency",
+            "title": "Prices in AED",
+            "text": "Shown in UAE dirhams."
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure checkout",
+            "text": "Encrypted Shopify checkout."
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "language",
+            "title": "English and Arabic",
+            "text": "Shop in the language you prefer."
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "Safety information",
+            "text": "Age and safety warnings on every product."
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    },
+    "px_worlds": {
+      "type": "px-range-worlds",
+      "settings": {
+        "heading": "Pick a colour world",
+        "text": "Every range has its own palette. Mix them for even more colours."
+      },
+      "blocks": {
+        "r_rainbow": {
+          "type": "range",
+          "settings": {
+            "collection": "rainbow",
+            "range": "rainbow"
+          }
+        },
+        "r_pastel": {
+          "type": "range",
+          "settings": {
+            "collection": "pastel",
+            "range": "pastel"
+          }
+        },
+        "r_bright": {
+          "type": "range",
+          "settings": {
+            "collection": "bright",
+            "range": "bright"
+          }
+        },
+        "r_clear": {
+          "type": "range",
+          "settings": {
+            "collection": "clear",
+            "range": "clear"
+          }
+        },
+        "r_light": {
+          "type": "range",
+          "settings": {
+            "collection": "light",
+            "range": "light"
+          }
+        },
+        "r_roads": {
+          "type": "range",
+          "settings": {
+            "collection": "roads",
+            "range": "roads"
+          }
+        }
+      },
+      "block_order": [
+        "r_rainbow",
+        "r_pastel",
+        "r_bright",
+        "r_clear",
+        "r_light",
+        "r_roads"
+      ]
+    },
+    "px_finder": {
+      "type": "px-pack-finder",
+      "settings": {
+        "heading": "Where to start",
+        "text": "Pick a path. Every set connects with every other, so you can always add more."
+      },
+      "blocks": {
+        "p1": {
+          "type": "path",
+          "settings": {
+            "label": "First set",
+            "hint": "Smaller packs for first builders.",
+            "cta": "Shop starter sets",
+            "collection": "starter-sets",
+            "shape": "square",
+            "range": "pastel"
+          }
+        },
+        "p2": {
+          "type": "path",
+          "settings": {
+            "label": "Bigger builds",
+            "hint": "100+ pieces for towers, castles and whole cities.",
+            "cta": "Shop large sets",
+            "collection": "large-sets",
+            "shape": "large-square",
+            "range": "bright"
+          }
+        },
+        "p3": {
+          "type": "path",
+          "settings": {
+            "label": "Ball runs",
+            "hint": "Tubes and balls for tracks that twist and drop.",
+            "cta": "Shop ball runs",
+            "collection": "ball-runs",
+            "shape": "ball",
+            "range": "rainbow"
+          }
+        },
+        "p4": {
+          "type": "path",
+          "settings": {
+            "label": "A gift",
+            "hint": "Gift-ready packs, including picks under AED 300.",
+            "cta": "Shop gifts",
+            "collection": "gifts",
+            "shape": "rhombus",
+            "range": "glitter"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ]
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "px_hero",
+    "px_trust",
+    "px_worlds",
+    "product_list_fa6P9H",
+    "px_finder"
   ]
 }
