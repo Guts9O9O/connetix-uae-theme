@@ -382,6 +382,42 @@
         "p3",
         "p4"
       ]
+    },
+    "px_explode": {
+      "type": "px-exploded-tile",
+      "settings": {
+        "heading": "What's inside a tile",
+        "text": "A closer look at how a magnetic tile is put together.",
+        "caption": "Illustration only. Construction details to be confirmed by the brand."
+      },
+      "blocks": {
+        "e1": {
+          "type": "point",
+          "settings": {
+            "title": "Frame",
+            "text": "Rounded, bevelled edges that are easy to grip."
+          }
+        },
+        "e2": {
+          "type": "point",
+          "settings": {
+            "title": "Magnets",
+            "text": "Set into the frame so tiles connect on any edge."
+          }
+        },
+        "e3": {
+          "type": "point",
+          "settings": {
+            "title": "Colour panel",
+            "text": "Translucent, so colours mix where tiles overlap."
+          }
+        }
+      },
+      "block_order": [
+        "e1",
+        "e2",
+        "e3"
+      ]
     }
   },
   "order": [
@@ -389,6 +425,7 @@
     "px_trust",
     "px_worlds",
     "product_list_fa6P9H",
+    "px_explode",
     "px_finder"
   ]
 }

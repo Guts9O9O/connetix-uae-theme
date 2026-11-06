@@ -1,0 +1,247 @@
+{%- comment -%}
+  "Exploded tile": an illustrated tile pulled apart into layers (frame, magnets, colour panel)
+  with numbered callouts. The layers separate as the section scrolls into view
+  (CSS scroll-driven animation where supported; otherwise shown already separated).
+  Illustration only — construction details must be confirmed by the brand.
+{%- endcomment -%}
+<section class="px-explode" aria-labelledby="PxExplodeTitle-{{ section.id }}">
+  <div class="px-explode__inner">
+    <div class="px-explode__copy">
+      <h2 class="px-explode__title" id="PxExplodeTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="px-explode__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      <ol class="px-explode__points" role="list">
+        {%- for block in section.blocks -%}
+          <li class="px-explode__point" {{ block.shopify_attributes }}>
+            <span class="px-explode__num" aria-hidden="true">{{ forloop.index }}</span>
+            <span>
+              <strong>{{ block.settings.title | escape }}</strong>
+              {%- if block.settings.text != blank -%}
+                <span class="px-explode__ptext">{{ block.settings.text | escape }}</span>
+              {%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ol>
+      {%- if section.settings.caption != blank -%}
+        <p class="px-explode__caption">{{ section.settings.caption | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="px-explode__art" aria-hidden="true">
+      <svg viewBox="0 0 400 420" focusable="false">
+        <defs>
+          <linearGradient id="PxPanel-{{ section.id }}" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#01B0ED" stop-opacity=".85"/>
+            <stop offset="1" stop-color="#683C86" stop-opacity=".75"/>
+          </linearGradient>
+        </defs>
+        <g class="px-layer px-layer--panel">
+          <path d="M200 40 L330 115 L200 190 L70 115 Z" fill="url(#PxPanel-{{ section.id }})"/>
+          <path d="M200 58 L300 115 L200 172 L100 115 Z" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>
+          <circle cx="352" cy="88" r="15" class="px-explode__badge"/>
+          <text x="352" y="93" text-anchor="middle" class="px-explode__badge-num">3</text>
+        </g>
+        <g class="px-layer px-layer--magnets">
+          <g fill="#C9CED9" stroke="#18274F" stroke-width="2">
+            <rect x="128" y="196" width="22" height="12" rx="4" transform="rotate(30 139 202)"/>
+            <rect x="250" y="196" width="22" height="12" rx="4" transform="rotate(-30 261 202)"/>
+            <rect x="128" y="250" width="22" height="12" rx="4" transform="rotate(-30 139 256)"/>
+            <rect x="250" y="250" width="22" height="12" rx="4" transform="rotate(30 261 256)"/>
+          </g>
+          <circle cx="352" cy="228" r="15" class="px-explode__badge"/>
+          <text x="352" y="233" text-anchor="middle" class="px-explode__badge-num">2</text>
+        </g>
+        <g class="px-layer px-layer--frame">
+          <path d="M200 250 L340 330 L200 410 L60 330 Z" fill="#F1F2EF" stroke="#18274F" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M200 272 L302 330 L200 388 L98 330 Z" fill="#fff" stroke="#18274F" stroke-opacity=".25" stroke-width="2"/>
+          <circle cx="352" cy="360" r="15" class="px-explode__badge"/>
+          <text x="352" y="365" text-anchor="middle" class="px-explode__badge-num">1</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .px-explode {
+    padding-block: clamp(48px, 7vw, 96px);
+    padding-inline: var(--page-margin, 16px);
+    background: linear-gradient(180deg, #e9ecf3, var(--px-paper));
+    color: var(--px-ink);
+  }
+
+  .px-explode__inner {
+    max-inline-size: var(--page-content-width, 1200px);
+    margin-inline: auto;
+    display: grid;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+  }
+
+  @media screen and (min-width: 900px) {
+    .px-explode__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .px-explode__title {
+    margin: 0;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    color: inherit;
+  }
+
+  .px-explode__text {
+    margin: var(--px-space-3, 12px) 0 0;
+    max-inline-size: 48ch;
+    font-size: 1.0625rem;
+  }
+
+  .px-explode__points {
+    display: grid;
+    gap: var(--px-space-4, 16px);
+    margin: var(--px-space-6, 32px) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .px-explode__point {
+    display: flex;
+    gap: var(--px-space-3, 12px);
+    align-items: flex-start;
+  }
+
+  .px-explode__point > span:last-child {
+    display: grid;
+    gap: 2px;
+  }
+
+  .px-explode__num {
+    flex: none;
+    display: grid;
+    place-items: center;
+    inline-size: 32px;
+    block-size: 32px;
+    border-radius: 50%;
+    background: var(--px-ink);
+    color: var(--px-paper);
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .px-explode__ptext {
+    font-size: 0.9375rem;
+    opacity: 0.88;
+  }
+
+  .px-explode__caption {
+    margin: var(--px-space-5, 24px) 0 0;
+    font-size: 0.8125rem;
+    opacity: 0.75;
+  }
+
+  .px-explode__art svg {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: 460px;
+    margin-inline: auto;
+    overflow: visible;
+  }
+
+  [dir='rtl'] .px-explode__art svg {
+    transform: scaleX(-1);
+  }
+
+  [dir='rtl'] .px-explode__badge-num {
+    transform: scaleX(-1);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .px-explode__badge {
+    fill: var(--px-ink);
+  }
+
+  .px-explode__badge-num {
+    fill: var(--px-paper);
+    font: 600 14px/1 var(--font-body--family, sans-serif);
+  }
+
+  .px-layer {
+    transition: transform var(--px-d-l, 560ms) var(--px-ease-snap);
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .px-layer--panel {
+        animation: px-explode-panel linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 45%;
+      }
+
+      .px-layer--frame {
+        animation: px-explode-frame linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 45%;
+      }
+    }
+  }
+
+  @keyframes px-explode-panel {
+    from {
+      transform: translateY(150px);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  @keyframes px-explode-frame {
+    from {
+      transform: translateY(-70px);
+    }
+    to {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Exploded tile",
+  "tag": "div",
+  "class": "px-explode-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What's inside a tile" },
+    { "type": "text", "id": "text", "label": "Text", "default": "A closer look at how a magnetic tile is put together." },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption",
+      "default": "Illustration only. Construction details to be confirmed by the brand."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Point" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Exploded tile",
+      "blocks": [
+        { "type": "point", "settings": { "title": "Frame", "text": "Rounded, bevelled edges that are easy to grip." } },
+        { "type": "point", "settings": { "title": "Magnets", "text": "Set into the frame so tiles connect on any edge." } },
+        { "type": "point", "settings": { "title": "Colour panel", "text": "Translucent, so colours mix where tiles overlap." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
