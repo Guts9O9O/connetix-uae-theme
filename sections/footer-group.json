@@ -142,7 +142,7 @@
           "type": "menu",
           "settings": {
             "menu": "footer",
-            "heading": "",
+            "heading": "Shop",
             "menu_spacing": 12,
             "show_as_accordion": false,
             "accordion_icon": "plus",
@@ -158,8 +158,8 @@
         "menu_main": {
           "type": "menu",
           "settings": {
-            "menu": "main-menu",
-            "heading": "",
+            "menu": "customer-care",
+            "heading": "Help",
             "menu_spacing": 12,
             "show_as_accordion": false,
             "accordion_icon": "plus",
