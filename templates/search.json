@@ -78,15 +78,17 @@
           "type": "_product-card",
           "static": true,
           "settings": {
-            "product_card_gap": 4,
-            "border": "none",
+            "product_card_gap": 6,
+            "border": "solid",
             "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "border_opacity": 10,
+            "border_radius": 20,
+            "padding-block-start": 8,
+            "padding-block-end": 16,
+            "padding-inline-start": 8,
+            "padding-inline-end": 8,
+            "background_color": "#ffffff",
+            "border_color": "#18274f"
           },
           "blocks": {
             "product_card_gallery_cFExAi": {
@@ -97,7 +99,7 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
-                "border_radius": 0,
+                "border_radius": 14,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -109,13 +111,13 @@
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
-                "width": "fit-content",
+                "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
                 "type_preset": "paragraph",
                 "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
+                "font_size": "1.0625rem",
+                "line_height": "tight",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
@@ -124,8 +126,8 @@
                 "corner_radius": 0,
                 "padding-block-start": 4,
                 "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-start": 6,
+                "padding-inline-end": 6
               },
               "blocks": {}
             },
@@ -146,8 +148,8 @@
                 "case": "none",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-start": 6,
+                "padding-inline-end": 6
               },
               "blocks": {}
             }

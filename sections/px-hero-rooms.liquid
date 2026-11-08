@@ -9,8 +9,20 @@
   assign facts = section.settings.facts
   if facts contains '[price]'
     assign from_price = ''
-    if section.settings.facts_collection != blank and section.settings.facts_collection.products_count > 0
-      assign from_price = section.settings.facts_collection.price_min | money_without_trailing_zeros
+    assign fc = section.settings.facts_collection
+    if fc == blank
+      assign fc = collections['starter-sets']
+    endif
+    assign min_cents = 0
+    for p in fc.products limit: 50
+      if p.available
+        if min_cents == 0 or p.price < min_cents
+          assign min_cents = p.price
+        endif
+      endif
+    endfor
+    if min_cents > 0
+      assign from_price = min_cents | money_without_trailing_zeros
     endif
     if from_price == ''
       assign facts = section.settings.facts_fallback
