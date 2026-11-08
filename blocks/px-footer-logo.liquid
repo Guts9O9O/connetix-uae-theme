@@ -1,0 +1,47 @@
+{%- doc -%}
+  The light CONNETIX logo for the navy footer, from Content > Files
+  (theme setting "Light logo file name for dark backgrounds").
+{%- enddoc -%}
+{%- if settings.px_logo_reversed_file != blank -%}
+  <a class="px-footer-logo" href="{{ routes.root_url }}" {{ block.shopify_attributes }}>
+    <img
+      src="{{ settings.px_logo_reversed_file | file_img_url: '480x' }}"
+      srcset="{{ settings.px_logo_reversed_file | file_img_url: '240x' }} 240w, {{ settings.px_logo_reversed_file | file_img_url: '480x' }} 480w"
+      sizes="200px"
+      width="240"
+      height="59"
+      loading="lazy"
+      alt="{{ 'px.wordmark' | t | escape }}"
+    >
+  </a>
+{%- endif -%}
+
+{% stylesheet %}
+  .px-footer-logo {
+    display: inline-block;
+  }
+
+  .px-footer-logo img {
+    display: block;
+    inline-size: 200px;
+    block-size: auto;
+  }
+
+  .px-footer-logo:focus-visible {
+    outline: var(--focus-outline-width, 3px) solid var(--px-sky, #01b0ed);
+    outline-offset: 4px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "CONNETIX logo",
+  "tag": null,
+  "settings": [],
+  "presets": [
+    {
+      "name": "CONNETIX logo"
+    }
+  ]
+}
+{% endschema %}

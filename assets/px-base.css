@@ -1,7 +1,6 @@
 /*
- * CONNETIX UAE — base layer: Arabic typography, RTL helpers, focus, utilities.
- * Rule: every custom rule uses logical properties (inline-start/end, block-start/end)
- * so it works in both directions without [dir] overrides.
+ * CONNETIX UAE — base layer: focus, logo, media, chips, motion.
+ * Custom rules use logical properties (inline-start/end, block-start/end).
  */
 
 /* ---------- Focus: thicker, always visible ---------- */
@@ -10,43 +9,25 @@
   --focus-outline-offset: 2px;
 }
 
-/* ---------- Arabic typography ---------- */
-html[lang='ar'] {
-  /* Arabic needs more vertical room for ascenders, dots and marks */
-  --line-height--display-tight: 1.2;
-  --line-height--display-normal: 1.3;
-  --line-height--display-loose: 1.4;
-  --line-height--heading-tight: 1.3;
-  --line-height--heading-normal: 1.4;
-  --line-height--heading-loose: 1.5;
-  --line-height--body-tight: 1.45;
-  --line-height--body-normal: 1.65;
-  --line-height--body-loose: 1.8;
+/* ---------- Logo ---------- */
+.px-logo {
+  display: block;
+  inline-size: auto;
+  block-size: var(--px-logo-h, 32px);
 }
 
-/* Letter-spacing breaks Arabic joining; upper-casing has no meaning in Arabic */
-:lang(ar) {
-  letter-spacing: 0 !important;
-  text-transform: none !important;
+@media screen and (max-width: 749px) {
+  .px-logo {
+    block-size: var(--px-logo-h-mobile, 24px);
+  }
 }
 
-/* Keep Latin brand names, SKUs, prices and numbers upright inside Arabic text */
-.px-ltr,
-:lang(ar) .px-ltr {
-  direction: ltr;
-  unicode-bidi: isolate;
-}
-
-/* ---------- Direction helpers ---------- */
-/* Mirror directional icons (arrows, chevrons) in RTL */
-[dir='rtl'] .px-flip-rtl {
-  transform: scaleX(-1);
-}
-
-/* ---------- Wordmark (text placeholder until the logo file arrives) ---------- */
-.header-logo {
-  --font-weight: 700;
-  letter-spacing: 0.08em;
+/* ---------- Media that plays only while visible ---------- */
+.px-video {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
 }
 
 /* ---------- Colour world surface ---------- */
@@ -129,7 +110,7 @@ html fly-to-cart {
 
 @keyframes px-tumble {
   to {
-    rotate: calc(180deg * var(--px-dir));
+    rotate: 180deg;
   }
 }
 
@@ -146,4 +127,124 @@ html fly-to-cart {
   100% {
     transform: scale(1);
   }
+}
+
+/* ---------- Buttons (px sections) ---------- */
+.px-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--px-space-2);
+  min-block-size: 48px;
+  padding-inline: 26px;
+  border: 2px solid var(--px-ink);
+  border-radius: var(--px-radius-pill);
+  font-family: var(--font-body--family);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--px-d-s) var(--px-ease-standard),
+    color var(--px-d-s) var(--px-ease-standard),
+    transform var(--px-d-s) var(--px-ease-snap);
+}
+
+.px-btn--primary {
+  background: var(--px-ink);
+  color: var(--px-white);
+}
+
+.px-btn--quiet {
+  background: transparent;
+  color: var(--px-ink);
+}
+
+.px-btn--on-dark {
+  border-color: var(--px-white);
+  background: var(--px-white);
+  color: var(--px-ink);
+}
+
+@media (hover: hover) {
+  .px-btn--primary:hover {
+    background: #263a70;
+    border-color: #263a70;
+  }
+
+  .px-btn--quiet:hover {
+    background: var(--px-white);
+  }
+}
+
+.px-btn:active {
+  transform: scale(0.97);
+}
+
+.px-btn:focus-visible {
+  outline: var(--focus-outline-width) solid var(--px-sky);
+  outline-offset: 3px;
+}
+
+/* ---------- Section heading pattern ---------- */
+.px-head {
+  display: grid;
+  gap: var(--px-space-3);
+  max-inline-size: 60ch;
+  margin-block-end: clamp(24px, 3vw, 40px);
+}
+
+.px-head__title {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: inherit;
+  text-wrap: balance;
+}
+
+.px-head__text {
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+/* ---------- Video wrapper + pause/play ---------- */
+.px-video-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--px-mist);
+}
+
+.px-video-toggle {
+  position: absolute;
+  inset-block-end: 10px;
+  inset-inline-end: 10px;
+  display: grid;
+  place-items: center;
+  inline-size: 36px;
+  block-size: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.92);
+  color: var(--px-ink);
+  box-shadow: var(--px-shadow-1);
+  cursor: pointer;
+}
+
+.px-video-toggle:focus-visible {
+  outline: var(--focus-outline-width) solid var(--px-sky);
+  outline-offset: 2px;
+}
+
+.px-video-toggle__pause,
+.px-video-wrap.is-playing .px-video-toggle__play {
+  display: none;
+}
+
+.px-video-wrap.is-playing .px-video-toggle__pause {
+  display: block;
 }

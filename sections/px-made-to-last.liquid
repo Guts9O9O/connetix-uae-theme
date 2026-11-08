@@ -1,0 +1,180 @@
+{%- comment -%}
+  "Made to last": CONNETIX's own build-quality points next to their tile video.
+  The section background is white to match the video's studio background.
+{%- endcomment -%}
+<section class="px-made" aria-labelledby="PxMadeTitle-{{ section.id }}">
+  <div class="px-made__inner">
+    <div class="px-made__media">
+      {%- render 'px-video',
+        video: section.settings.video,
+        url: section.settings.video_url,
+        poster: section.settings.poster,
+        ratio: '1 / 1',
+        class: 'px-made__video',
+        label: section.settings.video_label
+      -%}
+    </div>
+    <div class="px-made__copy">
+      <div class="px-head">
+        <h2 class="px-head__title" id="PxMadeTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.text != blank -%}
+          <p class="px-head__text">{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+      </div>
+      <ul class="px-made__list" role="list">
+        {%- for block in section.blocks -%}
+          <li class="px-made__item" style="--chip: {{ block.settings.colour }};" {{ block.shopify_attributes }}>
+            <span class="px-made__mark" aria-hidden="true"></span>
+            <h3 class="px-made__name">{{ block.settings.title | escape }}</h3>
+            <p class="px-made__text">{{ block.settings.text | escape }}</p>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .px-made {
+    padding-block: clamp(48px, 7vw, 104px);
+    padding-inline: var(--page-margin, 16px);
+    background: #fff;
+    color: var(--px-ink);
+  }
+
+  .px-made__inner {
+    display: grid;
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+    max-inline-size: var(--page-content-width, 1280px);
+    margin-inline: auto;
+  }
+
+  @media screen and (min-width: 990px) {
+    .px-made__inner {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+  }
+
+  .px-made__video {
+    border-radius: var(--px-radius-panel, 24px);
+    background: #fff;
+  }
+
+  .px-made__list {
+    display: grid;
+    gap: clamp(20px, 2.4vw, 32px) clamp(20px, 3vw, 40px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .px-made__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .px-made__item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    column-gap: 14px;
+    row-gap: 4px;
+  }
+
+  /* A small bevelled tile in a range colour */
+  .px-made__mark {
+    grid-row: span 2;
+    inline-size: 22px;
+    block-size: 22px;
+    margin-block-start: 3px;
+    border-radius: 6px;
+    background: var(--chip, var(--px-sky));
+    box-shadow: inset 0 0 0 3px rgb(255 255 255 / 0.55);
+  }
+
+  .px-made__name {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: inherit;
+  }
+
+  .px-made__text {
+    margin: 0;
+    font-size: 0.9875rem;
+    line-height: 1.55;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Made to last",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Magnetic tiles, made to last"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL (MP4)",
+      "info": "Used when no video is selected above."
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Poster image"
+    },
+    {
+      "type": "text",
+      "id": "video_label",
+      "label": "Video description",
+      "info": "What the video shows, for screen readers."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "color",
+          "id": "colour",
+          "label": "Tile colour",
+          "default": "#01b0ed"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Made to last"
+    }
+  ]
+}
+{% endschema %}

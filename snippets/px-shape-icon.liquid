@@ -2,7 +2,7 @@
   Simple line-and-fill icon for a tile shape (used by "What's in the box").
   Original geometric drawings; colour comes from the range accent.
 
-  @param {string} shape - shape slug from the box_contents metafield (e.g. 'square', 'ball')
+  @param {string} shape - shape slug from the box_contents metafield (e.g. 'square', 'ball', 'hexagon', 'extra')
 {%- enddoc -%}
 {%- liquid
   assign tone = 'accent'
@@ -29,6 +29,19 @@
       assign d = 'M6 18H42V32H6Z'
     when 'road-straight', 'road-curve', 'road-junction'
       assign d = 'M6 6H42V42H6Z'
+      assign tone = 'ink'
+    when 'hexagon'
+      assign d = 'M15 8H33L42 24L33 40H15L6 24Z'
+    when 'pentagon'
+      assign d = 'M24 6L42 19L35 41H13L6 19Z'
+    when 'trapezoid'
+      assign d = 'M15 14H33L43 34H5Z'
+    when 'quarter-circle'
+      assign d = 'M8 40V8A32 32 0 0 1 40 40Z'
+    when 'post'
+      assign d = 'M18 6H30V42H18Z'
+    when 'extra'
+      assign d = 'M12 8H36V40H12Z'
       assign tone = 'ink'
     else
       assign d = 'M10 10H38V38H10Z'
@@ -60,6 +73,8 @@
         <path d="M6 24A18 18 0 0 1 24 42" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="5 5"/>
       {%- when 'road-junction' -%}
         <path d="M6 24H42M24 6V42" stroke="#fff" stroke-width="2.5" stroke-dasharray="5 5"/>
+      {%- when 'extra' -%}
+        <path d="M18 17H30M18 23H30M18 29H26" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
     {%- endcase -%}
   {%- endif -%}
 </svg>

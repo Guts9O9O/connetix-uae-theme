@@ -2129,8 +2129,26 @@
         "type": "checkbox",
         "id": "px_preview_flag",
         "label": "Show 'preview store' label",
-        "info": "Small fixed label telling reviewers that products and prices are placeholders. Turn off before launch.",
+        "info": "Thin strip telling reviewers that prices are placeholders. Turn off before launch.",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+      {
+        "type": "text",
+        "id": "px_logo_file",
+        "label": "Logo file name in Content > Files",
+        "info": "The CONNETIX vector logo (SVG). Used in the header when no logo image is set above.",
+        "default": "connetix-logo.svg"
+      },
+      {
+        "type": "text",
+        "id": "px_logo_reversed_file",
+        "label": "Light logo file name for dark backgrounds",
+        "info": "Used in the footer.",
+        "default": "connetix-logo-reversed.png"
       }
     ]
   }

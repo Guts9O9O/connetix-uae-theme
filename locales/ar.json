@@ -403,7 +403,8 @@
       "glitter": "اللامعة",
       "light": "المضيئة",
       "roads": "الطرق",
-      "pro": "برو"
+      "pro": "برو",
+      "ball-run": "Ball runs"
     },
     "play_types": {
       "tiles": "بلاطات مغناطيسية",
@@ -429,7 +430,13 @@
       "road-straight": "طريق مستقيم",
       "road-curve": "طريق منحنٍ",
       "road-junction": "تقاطع طرق",
-      "base-plate": "لوح قاعدة"
+      "base-plate": "لوح قاعدة",
+      "hexagon": "Hexagon",
+      "pentagon": "Pentagon",
+      "trapezoid": "Trapezoid",
+      "quarter-circle": "Quarter circle",
+      "post": "Post",
+      "extra": "Extra"
     },
     "language": "اللغة",
     "range_label": "مجموعة {{ range }}",
@@ -447,6 +454,9 @@
       "age_value": "{{ age }}+ سنوات"
     },
     "explore_ranges": "استكشف المجموعات",
-    "products_count": "عدد المنتجات: {{ count_text }}"
+    "products_count": "عدد المنتجات: {{ count_text }}",
+    "why_this_pack": "Why this pack",
+    "video_play": "Play video",
+    "video_pause": "Pause video"
   }
 }

@@ -208,16 +208,67 @@
       }
     },
     "px_hero": {
-      "type": "px-hero-lighttable",
+      "type": "px-hero-rooms",
       "settings": {
-        "eyebrow": "Magnetic tiles",
-        "heading": "Build it in colour",
-        "text": "<p>Translucent magnetic tiles that click together for open-ended play. Placeholder copy — replace with brand-approved text.</p>",
-        "button_1_label": "Shop by range",
+        "heading": "Magnetic tiles that grow with your child",
+        "text": "<p>CONNETIX tiles connect on every edge, so a first tower can become a castle, a ball run or a whole city. Shop the full range in AED.</p>",
+        "button_1_label": "Shop all sets",
         "button_1_link": "shopify://collections/all",
-        "button_2_label": "Find a gift",
-        "button_2_link": "shopify://collections/gifts"
-      }
+        "button_2_label": "Help me choose",
+        "button_2_link": "shopify://pages/gift-guide"
+      },
+      "blocks": {
+        "h_pastel": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/px-room-pastel.jpg",
+            "alt": "A girl smiling behind a pastel CONNETIX build",
+            "focal": "object-position: 50% 50%;",
+            "label": "Pastel",
+            "link": "shopify://collections/pastel",
+            "room": "#f6b0ba"
+          }
+        },
+        "h_bright": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/px-room-bright.jpg",
+            "alt": "A boy beside a tall bright CONNETIX tower",
+            "focal": "object-position: 50% 50%;",
+            "label": "Bright",
+            "link": "shopify://collections/bright",
+            "room": "#bdb8da"
+          }
+        },
+        "h_clear": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/px-room-clear.jpg",
+            "alt": "A girl looking through clear CONNETIX tiles",
+            "focal": "object-position: 50% 50%;",
+            "label": "Clear",
+            "link": "shopify://collections/clear",
+            "room": "#92d5de"
+          }
+        },
+        "h_roads": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/px-room-transport.jpg",
+            "alt": "A boy playing with a CONNETIX car build",
+            "focal": "object-position: 50% 50%;",
+            "label": "Roads & transport",
+            "link": "shopify://collections/roads",
+            "room": "#ecc75c"
+          }
+        }
+      },
+      "block_order": [
+        "h_pastel",
+        "h_bright",
+        "h_clear",
+        "h_roads"
+      ]
     },
     "px_trust": {
       "type": "px-trust-strip",
@@ -244,17 +295,17 @@
         "t3": {
           "type": "item",
           "settings": {
-            "icon": "language",
-            "title": "English and Arabic",
-            "text": "Shop in the language you prefer."
+            "icon": "tile",
+            "title": "Every pack connects",
+            "text": "All CONNETIX tiles work together."
           }
         },
         "t4": {
           "type": "item",
           "settings": {
             "icon": "shield",
-            "title": "Safety information",
-            "text": "Age and safety warnings on every product."
+            "title": "Safety tested for 3+",
+            "text": "Non-toxic ABS, free from BPA, lead and phthalates."
           }
         }
       },
@@ -268,60 +319,105 @@
     "px_worlds": {
       "type": "px-range-worlds",
       "settings": {
-        "heading": "Pick a colour world",
-        "text": "Every range has its own palette. Mix them for even more colours."
+        "heading": "Shop by range",
+        "text": "Every CONNETIX range connects with every other, so you can mix colours as a collection grows."
       },
       "blocks": {
-        "r_rainbow": {
-          "type": "range",
-          "settings": {
-            "collection": "rainbow",
-            "range": "rainbow"
-          }
-        },
         "r_pastel": {
           "type": "range",
           "settings": {
             "collection": "pastel",
-            "range": "pastel"
+            "range": "pastel",
+            "note": "Soft rose, berry, peach, mint and more",
+            "image": "shopify://shop_images/px-room-pastel.jpg",
+            "room": "#f6b0ba"
           }
         },
         "r_bright": {
           "type": "range",
           "settings": {
             "collection": "bright",
-            "range": "bright"
+            "range": "bright",
+            "note": "Vivid colours for big, bold builds",
+            "image": "shopify://shop_images/px-room-bright.jpg",
+            "room": "#bdb8da"
           }
         },
         "r_clear": {
           "type": "range",
           "settings": {
             "collection": "clear",
-            "range": "clear"
+            "range": "clear",
+            "note": "See-through tiles for light and colour play",
+            "image": "shopify://shop_images/px-room-clear.jpg",
+            "room": "#92d5de"
           }
         },
-        "r_light": {
+        "r_ballruns": {
           "type": "range",
           "settings": {
-            "collection": "light",
-            "range": "light"
+            "collection": "ball-runs",
+            "range": "ball-run",
+            "note": "Tubes, spirals and balls for runs that twist and drop",
+            "image": "shopify://shop_images/px-room-ballrun.jpg",
+            "room": "#a9a6c7"
           }
         },
         "r_roads": {
           "type": "range",
           "settings": {
             "collection": "roads",
-            "range": "roads"
+            "range": "roads",
+            "note": "Roads, ramps and car bases",
+            "image": "shopify://shop_images/px-room-transport.jpg",
+            "room": "#ecc75c"
+          }
+        },
+        "r_rainbow": {
+          "type": "range",
+          "settings": {
+            "collection": "rainbow",
+            "range": "rainbow",
+            "note": "The classic rainbow colours",
+            "room": "#e4e6e5"
+          }
+        },
+        "r_glitter": {
+          "type": "range",
+          "settings": {
+            "collection": "glitter",
+            "range": "glitter",
+            "note": "Tiles with glitter set inside"
+          }
+        },
+        "r_light": {
+          "type": "range",
+          "settings": {
+            "collection": "light",
+            "range": "light",
+            "note": "Rechargeable light-up tiles"
+          }
+        },
+        "r_pro": {
+          "type": "range",
+          "settings": {
+            "collection": "pro",
+            "range": "pro",
+            "title": "PRO",
+            "note": "Posts and planks for engineering builds"
           }
         }
       },
       "block_order": [
-        "r_rainbow",
         "r_pastel",
         "r_bright",
         "r_clear",
+        "r_ballruns",
+        "r_roads",
+        "r_rainbow",
+        "r_glitter",
         "r_light",
-        "r_roads"
+        "r_pro"
       ]
     },
     "px_finder": {
@@ -383,41 +479,194 @@
         "p4"
       ]
     },
-    "px_explode": {
-      "type": "px-exploded-tile",
+    "px_made": {
+      "type": "px-made-to-last",
       "settings": {
-        "heading": "What's inside a tile",
-        "text": "A closer look at how a magnetic tile is put together.",
-        "caption": "Illustration only. Construction details to be confirmed by the brand."
+        "heading": "Magnetic tiles, made to last",
+        "text": "Built to withstand years of play, every CONNETIX tile is made with high-quality materials and careful engineering for safety and durability.",
+        "video_url": "https://cdn.shopify.com/videos/c/vp/52547465734a422a8392c14fae10ca17/52547465734a422a8392c14fae10ca17.HD-720p-1.6Mbps-100446116.mp4",
+        "video_label": "A CONNETIX tile turning to show how it is made"
       },
       "blocks": {
-        "e1": {
+        "m1": {
           "type": "point",
           "settings": {
-            "title": "Frame",
-            "text": "Rounded, bevelled edges that are easy to grip."
+            "title": "Strong magnets",
+            "text": "Exceptionally strong magnets support tall, large-scale builds.",
+            "colour": "#f6b0ba"
           }
         },
-        "e2": {
+        "m2": {
           "type": "point",
           "settings": {
-            "title": "Magnets",
-            "text": "Set into the frame so tiles connect on any edge."
+            "title": "Rivets for extra safety",
+            "text": "Ultrasonic welding and metal rivets keep magnets safely enclosed.",
+            "colour": "#92d5de"
           }
         },
-        "e3": {
+        "m3": {
           "type": "point",
           "settings": {
-            "title": "Colour panel",
-            "text": "Translucent, so colours mix where tiles overlap."
+            "title": "Signature bevel design",
+            "text": "A bevelled edge makes each tile more durable and creates beautiful light refractions.",
+            "colour": "#bdb8da"
+          }
+        },
+        "m4": {
+          "type": "point",
+          "settings": {
+            "title": "Safety tested for 3+",
+            "text": "Made from non-toxic ABS plastic that is free from BPA, lead and phthalates.",
+            "colour": "#ecc75c"
           }
         }
       },
       "block_order": [
-        "e1",
-        "e2",
-        "e3"
+        "m1",
+        "m2",
+        "m3",
+        "m4"
       ]
+    },
+    "px_reel": {
+      "type": "px-video-reel",
+      "settings": {
+        "heading": "See it in motion",
+        "text": "Short clips of CONNETIX packs at play."
+      },
+      "blocks": {
+        "v1": {
+          "type": "clip",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/vp/32cc43e88ab54192b15af78b6173d1c4/32cc43e88ab54192b15af78b6173d1c4.HD-720p-2.1Mbps-100446118.mp4",
+            "caption": "A rainbow wiggle ball run",
+            "link": "shopify://collections/ball-runs"
+          }
+        },
+        "v2": {
+          "type": "clip",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/vp/e42fb3e7035a40558e23ba0f0509bf00/e42fb3e7035a40558e23ba0f0509bf00.HD-720p-1.6Mbps-100446119.mp4",
+            "caption": "A Pastel Starter Pack, built in stop motion",
+            "link": "shopify://collections/pastel"
+          }
+        },
+        "v3": {
+          "type": "clip",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/vp/36b5e601fb77494ba3ef36877339e5f2/36b5e601fb77494ba3ef36877339e5f2.HD-720p-1.6Mbps-100446117.mp4",
+            "caption": "Measuring with tiles",
+            "link": "shopify://collections/starter-sets"
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3"
+      ]
+    },
+    "px_awards": {
+      "type": "px-awards",
+      "settings": {
+        "heading": "Award-winning play",
+        "text": "Recognised by parents, educators and toy awards around the world."
+      },
+      "blocks": {
+        "a1": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-mother-baby-2026.png",
+            "alt": "Mother & Baby Awards 2026, Gold, Best Toddler Toy"
+          }
+        },
+        "a2": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-lbp-2026.png",
+            "alt": "Loved by Parents Awards 2026, Platinum winner, Best Educational Toy"
+          }
+        },
+        "a3": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-toy-insider-2026.png",
+            "alt": "The Toy Insider, Top Summer Toy 2026 winner"
+          }
+        },
+        "a4": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-mum-central-2026.png",
+            "alt": "Mum Central Awards 2026, Best Educational Toy, Gold winner"
+          }
+        },
+        "a5": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-astra-2026.jpg",
+            "alt": "Astra Star Play Award 2026 finalist"
+          }
+        },
+        "a6": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-nappa-2025.png",
+            "alt": "National Parenting Product Awards 2025 winner"
+          }
+        },
+        "a7": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-toyshop-uk-2023.png",
+            "alt": "Independent Toy Awards 2023 winner, Toy Shop UK"
+          }
+        },
+        "a8": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-ata-2023.png",
+            "alt": "Australian Toy Association 2023 winner, Judges' Choice 0 to 6 years"
+          }
+        },
+        "a9": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-teach-early-years-2022.png",
+            "alt": "Teach Early Years Awards 2022 winner"
+          }
+        },
+        "a10": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/px-award-toty-2022.png",
+            "alt": "Toy of the Year Awards 2022 finalist"
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5",
+        "a6",
+        "a7",
+        "a8",
+        "a9",
+        "a10"
+      ]
+    },
+    "px_story": {
+      "type": "px-story",
+      "settings": {
+        "image": "shopify://shop_images/px-founders.png",
+        "alt": "CONNETIX founders Brea Brand and Dave Alexander",
+        "heading": "Created by experts in learning and play",
+        "text": "<p>CONNETIX was founded by Brea Brand and Dave Alexander, who shared a vision to create open-ended construction toys that inspire learning through play. With a Masters in early childhood education, Brea brought deep expertise in child development, while Dave contributed his experience in mechanical design, manufacturing, logistics and entrepreneurship.</p><p>Today that vision lives on through a team of parents, educators and product specialists who create play experiences for children around the world.</p>",
+        "button_label": "",
+        "button_link": ""
+      }
     }
   },
   "order": [
@@ -425,7 +674,10 @@
     "px_trust",
     "px_worlds",
     "product_list_fa6P9H",
-    "px_explode",
-    "px_finder"
+    "px_made",
+    "px_reel",
+    "px_finder",
+    "px_awards",
+    "px_story"
   ]
 }

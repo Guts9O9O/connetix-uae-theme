@@ -1,0 +1,298 @@
+{%- comment -%}
+  Homepage hero. Copy on the left; on the right, CONNETIX range photographs set as
+  four tiles that snap together on load, like magnetic tiles meeting at an edge.
+  Each tile sits on its photo's own backdrop colour, so the photograph has no hard edge.
+  This is the page's one orchestrated motion moment; it is skipped for reduced motion.
+{%- endcomment -%}
+<section class="px-hero" aria-labelledby="PxHeroTitle-{{ section.id }}">
+  <div class="px-hero__inner">
+    <div class="px-hero__copy">
+      <h1 class="px-hero__title" id="PxHeroTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h1>
+      {%- if section.settings.text != blank -%}
+        <div class="px-hero__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+      <div class="px-hero__actions">
+        {%- if section.settings.button_1_label != blank -%}
+          <a class="px-btn px-btn--primary" href="{{ section.settings.button_1_link | default: routes.all_products_collection_url }}">
+            {{- section.settings.button_1_label | escape -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.button_2_label != blank -%}
+          <a class="px-btn px-btn--quiet" href="{{ section.settings.button_2_link | default: routes.all_products_collection_url }}">
+            {{- section.settings.button_2_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <ul class="px-hero__tiles" role="list" data-px-snap-in>
+      {%- for block in section.blocks limit: 4 -%}
+        {%- liquid
+          assign img = block.settings.image
+          assign url = block.settings.link | default: routes.all_products_collection_url
+          if forloop.first
+            assign loading = 'eager'
+            assign priority = 'high'
+          else
+            assign loading = 'eager'
+            assign priority = 'auto'
+          endif
+        -%}
+        <li
+          class="px-hero__tile"
+          style="--room: {{ block.settings.room }}; --i: {{ forloop.index0 }};"
+          {{ block.shopify_attributes }}
+        >
+          <a class="px-hero__tile-link" href="{{ url }}">
+            {%- if img != blank -%}
+              {{
+                img
+                | image_url: width: 1000
+                | image_tag:
+                  loading: loading,
+                  fetchpriority: priority,
+                  widths: '360, 500, 700, 1000',
+                  sizes: '(min-width: 990px) 26vw, 48vw',
+                  alt: block.settings.alt,
+                  class: 'px-hero__img',
+                  style: block.settings.focal
+              }}
+            {%- endif -%}
+            <span class="px-hero__label">{{ block.settings.label | escape }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% stylesheet %}
+  .px-hero {
+    padding-inline: var(--page-margin, 16px);
+    padding-block: clamp(24px, 4vw, 56px) clamp(40px, 6vw, 88px);
+    background: var(--px-paper);
+    color: var(--px-ink);
+  }
+
+  .px-hero__inner {
+    display: grid;
+    gap: clamp(28px, 4vw, 64px);
+    align-items: center;
+    max-inline-size: var(--page-content-width, 1280px);
+    margin-inline: auto;
+  }
+
+  @media screen and (min-width: 990px) {
+    .px-hero__inner {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+  }
+
+  .px-hero__title {
+    margin: 0;
+    max-inline-size: 13ch;
+    font-size: clamp(2.5rem, 6.2vw, 5rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--px-ink);
+    text-wrap: balance;
+  }
+
+  .px-hero__text {
+    max-inline-size: 44ch;
+    margin-block-start: var(--px-space-5, 24px);
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    line-height: 1.55;
+  }
+
+  .px-hero__text p {
+    margin: 0;
+  }
+
+  .px-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--px-space-3, 12px);
+    margin-block-start: var(--px-space-6, 32px);
+  }
+
+  .px-hero__tiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(8px, 1vw, 12px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .px-hero__tile {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: clamp(16px, 2vw, 28px);
+    overflow: hidden;
+    background: var(--room, var(--px-mist));
+    box-shadow: var(--px-bevel);
+  }
+
+  .px-hero__tile-link {
+    display: block;
+    block-size: 100%;
+    color: var(--px-ink);
+    text-decoration: none;
+  }
+
+  .px-hero__img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transition: transform var(--px-d-l, 560ms) var(--px-ease-standard);
+  }
+
+  .px-hero__label {
+    position: absolute;
+    inset-block-end: clamp(10px, 1.4vw, 16px);
+    inset-inline-start: clamp(10px, 1.4vw, 16px);
+    padding: 6px 14px;
+    border-radius: var(--px-radius-pill, 999px);
+    background: var(--px-white);
+    font-size: clamp(0.8125rem, 1vw, 0.9375rem);
+    font-weight: 500;
+    line-height: 1.2;
+    box-shadow: var(--px-shadow-1);
+  }
+
+  @media (hover: hover) {
+    .px-hero__tile-link:hover .px-hero__img {
+      transform: scale(1.04);
+    }
+  }
+
+  .px-hero__tile-link:focus-visible {
+    outline: var(--focus-outline-width, 3px) solid var(--px-ink);
+    outline-offset: -6px;
+    border-radius: inherit;
+  }
+
+  /* The snap: tiles start a little apart and tilted, then meet with a small overshoot. */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-px-snap-in] .px-hero__tile {
+      animation: px-hero-snap 680ms var(--px-ease-snap) both;
+      animation-delay: calc(120ms + var(--i) * 70ms);
+    }
+
+    /* Each tile arrives from its own corner */
+    [data-px-snap-in] .px-hero__tile:nth-child(1) { --from-x: -20px; --from-y: -20px; --from-r: -3deg; }
+    [data-px-snap-in] .px-hero__tile:nth-child(2) { --from-x: 20px; --from-y: -20px; --from-r: 3deg; }
+    [data-px-snap-in] .px-hero__tile:nth-child(3) { --from-x: -20px; --from-y: 20px; --from-r: 3deg; }
+    [data-px-snap-in] .px-hero__tile:nth-child(4) { --from-x: 20px; --from-y: 20px; --from-r: -3deg; }
+  }
+
+  @keyframes px-hero-snap {
+    from {
+      opacity: 0;
+      transform: translate(var(--from-x, 0), var(--from-y, 0)) rotate(var(--from-r, 0deg)) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero: range tiles",
+  "class": "px-hero-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Magnetic tiles that grow with your child"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "First button label",
+      "default": "Shop all sets"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "First button link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Second button label",
+      "default": "Find a pack"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Second button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Photo tile",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Photo description",
+          "info": "Describe the photo for people using screen readers."
+        },
+        {
+          "type": "select",
+          "id": "focal",
+          "label": "Crop focus",
+          "options": [
+            { "value": "object-position: 50% 50%;", "label": "Centre" },
+            { "value": "object-position: 50% 100%;", "label": "Bottom" },
+            { "value": "object-position: 38% 50%;", "label": "Left of centre" },
+            { "value": "object-position: 62% 50%;", "label": "Right of centre" }
+          ],
+          "default": "object-position: 50% 50%;"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "color",
+          "id": "room",
+          "label": "Backdrop colour",
+          "info": "Match the photo's background so the photo has no visible edge.",
+          "default": "#bdb8da"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero: range tiles"
+    }
+  ]
+}
+{% endschema %}

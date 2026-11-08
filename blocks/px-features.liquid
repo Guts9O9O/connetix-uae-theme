@@ -1,0 +1,102 @@
+{%- doc -%}
+  Three short feature notes for a pack, from CONNETIX's own product copy,
+  stored in the product's custom.features JSON metafield:
+  {"title": "…", "items": [{"title": "…", "text": "…"}, …]}
+{%- enddoc -%}
+{%- liquid
+  assign p = closest.product
+  assign data = p.metafields.custom.features.value
+-%}
+{%- capture range -%}{%- render 'px-range-of', product: closest.product -%}{%- endcapture -%}
+{%- assign range = range | strip -%}
+{%- if data.items.size > 0 -%}
+  <section
+    class="px-features"
+    {% if range != blank %}
+      data-range="{{ range | escape }}"
+    {% endif %}
+    aria-labelledby="PxFeaturesTitle-{{ block.id }}"
+    {{ block.shopify_attributes }}
+  >
+    <h2 class="px-features__title" id="PxFeaturesTitle-{{ block.id }}">
+      {%- if block.settings.heading != blank -%}
+        {{ block.settings.heading | escape }}
+      {%- else -%}
+        {{ 'px.why_this_pack' | t }}
+      {%- endif -%}
+    </h2>
+    <ul class="px-features__list" role="list">
+      {%- for item in data.items limit: 3 -%}
+        <li class="px-features__item">
+          <h3 class="px-features__name">{{ item.title | escape }}</h3>
+          <p class="px-features__text">{{ item.text | escape }}</p>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .px-features {
+    padding: var(--px-space-5, 24px);
+    border-radius: var(--px-radius-panel, 24px);
+    background: var(--range-backdrop);
+    color: var(--range-ink);
+  }
+
+  .px-features__title {
+    margin: 0 0 var(--px-space-4, 16px);
+    font-size: 1.25rem;
+    color: inherit;
+  }
+
+  .px-features__list {
+    display: grid;
+    gap: var(--px-space-4, 16px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .px-features__item {
+    padding-block-start: var(--px-space-4, 16px);
+    border-block-start: 2px solid color-mix(in srgb, var(--range-ink) 18%, transparent);
+  }
+
+  .px-features__item:first-child {
+    padding-block-start: 0;
+    border-block-start: 0;
+  }
+
+  .px-features__name {
+    margin: 0 0 var(--px-space-1, 4px);
+    font-size: 1rem;
+    color: inherit;
+  }
+
+  .px-features__text {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Pack features",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Leave blank to use \"Why this pack\"."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pack features"
+    }
+  ]
+}
+{% endschema %}

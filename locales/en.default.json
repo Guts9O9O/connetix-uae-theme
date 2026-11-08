@@ -388,7 +388,7 @@
   },
   "px": {
     "wordmark": "CONNETIX",
-    "preview_flag": "Preview store · placeholder products and prices",
+    "preview_flag": "Preview store. Prices are placeholders until the UAE price list is confirmed.",
     "vat_included": "Prices in AED, VAT included",
     "age_plus": "Ages {{ age }}+",
     "pieces": "{{ pieces }} pieces",
@@ -403,7 +403,8 @@
       "glitter": "Glitter",
       "light": "Light",
       "roads": "Roads",
-      "pro": "Pro"
+      "pro": "Pro",
+      "ball-run": "Ball runs"
     },
     "play_types": {
       "tiles": "Magnetic tiles",
@@ -429,7 +430,13 @@
       "road-straight": "Straight road",
       "road-curve": "Curved road",
       "road-junction": "Road junction",
-      "base-plate": "Base plate"
+      "base-plate": "Base plate",
+      "hexagon": "Hexagon",
+      "pentagon": "Pentagon",
+      "trapezoid": "Trapezoid",
+      "quarter-circle": "Quarter circle",
+      "post": "Post",
+      "extra": "Extra"
     },
     "language": "Language",
     "range_label": "{{ range }} range",
@@ -447,6 +454,9 @@
       "age_value": "{{ age }}+ years"
     },
     "explore_ranges": "Explore the ranges",
-    "products_count": "{{ count_text }} products"
+    "products_count": "{{ count_text }} products",
+    "why_this_pack": "Why this pack",
+    "video_play": "Play video",
+    "video_pause": "Pause video"
   }
 }

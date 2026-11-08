@@ -12,7 +12,7 @@
     "section": {
       "type": "px-collection-hero",
       "settings": {
-        "range_handles": "rainbow,pastel,bright,clear,light,roads",
+        "range_handles": "pastel,bright,clear,rainbow,glitter,light,ball-runs,roads,pro",
         "show_description": true,
         "show_range_links": true
       }

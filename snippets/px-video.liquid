@@ -1,0 +1,68 @@
+{%- doc -%}
+  A muted, looping video that plays only while visible (see px-motion.js),
+  with a pause/play button.
+
+  @param {object} [video] - a video from a "video" setting (Shopify Files)
+  @param {string} [url] - a direct MP4 URL, used when no video object is set
+  @param {object} [poster] - optional poster image
+  @param {string} [ratio] - CSS aspect-ratio, e.g. '1 / 1' or '9 / 16'
+  @param {string} [class] - extra classes on the wrapper
+  @param {string} [label] - accessible description of what the video shows
+{%- enddoc -%}
+{%- liquid
+  assign src = blank
+  if video != blank
+    for source in video.sources
+      if source.mime_type == 'video/mp4'
+        assign src = source.url
+        if source.height >= 720
+          break
+        endif
+      endif
+    endfor
+    if poster == blank
+      assign poster = video.preview_image
+    endif
+  elsif url != blank
+    assign src = url
+  endif
+-%}
+{%- if src != blank -%}
+  <div
+    class="px-video-wrap {{ class }}"
+    data-px-video
+    {% if ratio != blank %}
+      style="aspect-ratio: {{ ratio }};"
+    {% endif %}
+  >
+    <video
+      class="px-video"
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      {% if poster != blank %}
+        poster="{{ poster | image_url: width: 900 }}"
+      {% endif %}
+      {% if label != blank %}
+        aria-label="{{ label | escape }}"
+      {% else %}
+        aria-hidden="true"
+      {% endif %}
+    >
+      <source src="{{ src }}{% if poster == blank %}#t=0.001{% endif %}" type="video/mp4">
+    </video>
+    <button
+      type="button"
+      class="px-video-toggle"
+      data-px-video-toggle
+      data-play-label="{{ 'px.video_play' | t | escape }}"
+      data-pause-label="{{ 'px.video_pause' | t | escape }}"
+      aria-label="{{ 'px.video_play' | t | escape }}"
+      aria-pressed="false"
+    >
+      <svg class="px-video-toggle__play" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9.5-5.5z" fill="currentColor"/></svg>
+      <svg class="px-video-toggle__pause" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" fill="currentColor"/></svg>
+    </button>
+  </div>
+{%- endif -%}

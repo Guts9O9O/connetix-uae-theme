@@ -19,7 +19,7 @@
   endif
 
   assign alt_text_fallback = 'accessibility.home_logo_alt' | t: store_name: shop.name
-  # px: text wordmark until a logo file is uploaded in theme settings
+  # px: text wordmark used only if neither a logo image nor the px logo file is available
   assign px_wordmark = 'px.wordmark' | t
 %}
 
@@ -57,6 +57,17 @@
     {% endif %}
     data-testid="header-logo"
   >
+    {%- # px: the CONNETIX vector logo from Content > Files, when no logo image is set -%}
+    {%- if settings.logo == blank and settings.px_logo_file != blank -%}
+      <img
+        class="px-logo"
+        src="{{ settings.px_logo_file | file_url }}"
+        alt="{{ px_wordmark | escape }}"
+        width="238"
+        height="40"
+        style="--px-logo-h: {{ settings.logo_height }}px; --px-logo-h-mobile: {{ settings.logo_height_mobile }}px;"
+      >
+    {%- else -%}
     {% render 'image',
       image: settings.logo,
       class: 'header-logo__image',
@@ -65,6 +76,7 @@
       text_fallback: px_wordmark,
       style: logo_style
     %}
+    {%- endif -%}
   </span>
 
   {% if use_inverse_logo %}

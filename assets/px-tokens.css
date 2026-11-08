@@ -1,15 +1,20 @@
 /*
  * CONNETIX UAE — design tokens ("px" layer)
- * Values are proposals pending brand guidelines (master plan §7.6).
  * Horizon's own variables are set from theme settings; these tokens add
- * the brand palette, shape, motion and range "colour worlds".
+ * the brand palette, shape, motion and the range "rooms".
+ *
+ * Rooms: CONNETIX photographs every range on a solid colour backdrop
+ * (pastel on pink, bright on lavender, clear on aqua, transport on yellow).
+ * The room colours below are sampled from those photographs, so a photo
+ * placed on its room colour has no visible edge.
  */
 
 :root {
   /* Brand colour */
   --px-ink: #18274f;          /* navy: text, primary buttons, footer */
   --px-ink-soft: #27344f;     /* body text on light surfaces */
-  --px-paper: #f1f2ef;        /* page background */
+  --px-paper: #fafbf9;        /* page background: the white tabletop in the photos */
+  --px-mist: #eef0f4;         /* quiet panels */
   --px-white: #ffffff;        /* raised surfaces */
   --px-sky: #01b0ed;          /* accent fill — navy text only */
   --px-coral: #ec5253;        /* gifts / sale accent — large text & UI only */
@@ -51,17 +56,20 @@
   --px-ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --px-ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Writing direction as a number, for transforms that must mirror in RTL */
+  /* Rooms, sampled from CONNETIX photography */
+  --px-room-pink: #f6b0ba;
+  --px-room-lilac: #bdb8da;
+  --px-room-aqua: #92d5de;
+  --px-room-sun: #ecc75c;
+  --px-room-dusk: #a9a6c7;
+
+  /* Kept for transforms written with a direction multiplier (store is LTR) */
   --px-dir: 1;
 
   /* Default colour world (calm: paper + navy) */
   --range-backdrop: var(--px-paper);
   --range-ink: var(--px-ink);
   --range-accent: var(--px-sky);
-}
-
-[dir='rtl'] {
-  --px-dir: -1;
 }
 
 @supports (transition-timing-function: linear(0, 1)) {
@@ -81,24 +89,25 @@
 }
 
 /*
- * Range colour worlds.
+ * Range rooms.
  * Any element with data-range="<handle>" (collection header, product page,
  * product card) takes on its range's backdrop / ink / accent.
- * Contrast (ink on backdrop) is ≥ 8.5:1 for every world; accents are used for
- * large text and graphics only (≥ 3:1). Re-check when brand colours arrive.
+ * Navy ink on every backdrop is at least 6:1. Accents are for large text and
+ * graphics only (at least 3:1).
  */
-[data-range='rainbow'] { --range-backdrop: #fff1c7; --range-ink: var(--px-ink); --range-accent: var(--px-coral); }
-[data-range='pastel']  { --range-backdrop: var(--px-blush); --range-ink: var(--px-ink); --range-accent: var(--px-plum); }
-[data-range='bright']  { --range-backdrop: #cff0fc; --range-ink: var(--px-ink); --range-accent: #0b7fb0; }
-[data-range='clear']   { --range-backdrop: #ddf3f5; --range-ink: var(--px-ink); --range-accent: #1f8592; }
-[data-range='glitter'] { --range-backdrop: #eadffb; --range-ink: var(--px-ink); --range-accent: var(--px-plum); }
+[data-range='rainbow'] { --range-backdrop: #fff3cf; --range-ink: var(--px-ink); --range-accent: var(--px-coral); }
+[data-range='pastel']  { --range-backdrop: var(--px-room-pink); --range-ink: var(--px-ink); --range-accent: var(--px-plum); }
+[data-range='bright']  { --range-backdrop: var(--px-room-lilac); --range-ink: var(--px-ink); --range-accent: #0b5fa8; }
+[data-range='clear']   { --range-backdrop: var(--px-room-aqua); --range-ink: var(--px-ink); --range-accent: #10626d; }
+[data-range='glitter'] { --range-backdrop: #e3d8f6; --range-ink: var(--px-ink); --range-accent: var(--px-plum); }
 [data-range='light']   { --range-backdrop: var(--px-ink); --range-ink: var(--px-paper); --range-accent: #ffd84d; }
-[data-range='roads']   { --range-backdrop: #e4e7ee; --range-ink: var(--px-ink); --range-accent: var(--px-ink); }
-[data-range='pro']     { --range-backdrop: var(--px-lavender); --range-ink: var(--px-ink); --range-accent: var(--px-ink); }
+[data-range='roads']   { --range-backdrop: var(--px-room-sun); --range-ink: var(--px-ink); --range-accent: var(--px-ink); }
+[data-range='pro']     { --range-backdrop: #d6dbe8; --range-ink: var(--px-ink); --range-accent: var(--px-ink); }
+[data-range='ball-run'] { --range-backdrop: var(--px-room-dusk); --range-ink: var(--px-ink); --range-accent: var(--px-ink); }
 
 /*
  * Per-range tile colours (6 each) for illustrations such as "What's in the box".
- * Placeholder palette — replace with the brand's official range colours.
+ * Approximations of each range's tile colours.
  */
 :root,
 [data-range='rainbow'] { --px-c1: #e94b3c; --px-c2: #f39c33; --px-c3: #f7d23e; --px-c4: #5dbb63; --px-c5: #2f80ed; --px-c6: #8e5bd9; }

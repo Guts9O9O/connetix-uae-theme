@@ -1,8 +1,9 @@
 {%- doc -%}
-  "What's in the box": a visual grid of tile shapes with quantities, from the
+  "What's in the box": a visual grid of pieces with quantities, from the
   product's custom.box_contents JSON metafield:
-  {"sample": true, "lines": [{"shape": "square", "qty": 24}, ...]}
-  Shape names come from locale keys px.shapes.<shape>.
+  {"lines": [{"qty": 16, "name": "Standard Squares", "shape": "square"}, ...]}
+  "name" is CONNETIX's own name for the piece; "shape" picks the icon.
+  Lines without a name fall back to the locale key px.shapes.<shape>.
 {%- enddoc -%}
 {%- liquid
   assign p = closest.product
@@ -31,7 +32,9 @@
         <li class="px-box__item">
           <span class="px-box__icon">{% render 'px-shape-icon', shape: line.shape %}</span>
           <span class="px-box__qty"><bdi>×{{ line.qty }}</bdi></span>
-          <span class="px-box__name">{{ shape_key | t }}</span>
+          <span class="px-box__name">
+            {%- if line.name != blank -%}{{ line.name | escape }}{%- else -%}{{ shape_key | t }}{%- endif -%}
+          </span>
         </li>
       {%- endfor -%}
     </ul>
@@ -72,7 +75,7 @@
 
   .px-box__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
     gap: var(--px-space-3, 12px);
     margin: 0;
     padding: 0;
