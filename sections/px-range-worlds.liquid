@@ -18,7 +18,7 @@
         {%- assign c = block.settings.collection -%}
         {%- if c != blank -%}
           {%- liquid
-            assign photo = block.settings.image | default: c.featured_image
+            assign photo = block.settings.image | default: c.image
             assign pack = blank
             if photo == blank
               for prod in c.products limit: 12
@@ -275,7 +275,7 @@
           "type": "image_picker",
           "id": "image",
           "label": "Photo",
-          "info": "Optional. Defaults to the collection image."
+          "info": "Optional. Defaults to the collection's own image."
         },
         {
           "type": "color",
