@@ -116,6 +116,27 @@
     min-inline-size: 0;
   }
 
+  /* Phones and tablets: the photographs lead, the copy follows */
+  @media screen and (max-width: 989px) {
+    .px-hero__tiles {
+      order: -1;
+      inline-size: min(100%, 600px);
+    }
+
+    .px-hero__inner {
+      gap: 24px;
+    }
+
+    .px-hero__text {
+      margin-block-start: 16px;
+      font-size: 1.0625rem;
+    }
+
+    .px-hero__actions {
+      margin-block-start: 24px;
+    }
+  }
+
   @media screen and (min-width: 990px) {
     .px-hero__inner {
       grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
