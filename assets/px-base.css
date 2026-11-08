@@ -313,3 +313,41 @@ body {
 .mega-menu img {
   border-radius: var(--px-radius-card, 16px);
 }
+
+/* ---------- Store pages (FAQ, Delivery, Our story...): readable long-form ---------- */
+.page-content {
+  max-inline-size: 68ch;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.page-content h2 {
+  margin-block: 2em 0.5em;
+  font-size: clamp(1.5rem, 0.8vw + 1.2rem, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.page-content h3 {
+  margin-block: 1.6em 0.4em;
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.page-content ul {
+  padding-inline-start: 1.25em;
+}
+
+.page-content li + li {
+  margin-block-start: 0.35em;
+}
+
+.page-content li::marker {
+  color: var(--px-plum);
+}
+
+.page-content a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
