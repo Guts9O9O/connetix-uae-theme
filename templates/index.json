@@ -211,11 +211,14 @@
       "type": "px-hero-rooms",
       "settings": {
         "heading": "Magnetic tiles that grow with your child",
-        "text": "<p>CONNETIX tiles connect on every edge, so a first tower can become a castle, a ball run or a whole city. Shop the full range in AED.</p>",
+        "text": "<p>CONNETIX tiles connect on every edge, so a first tower can become a castle, a ball run or a whole city.</p>",
         "button_1_label": "Shop all sets",
         "button_1_link": "shopify://collections/all",
-        "button_2_label": "Help me choose",
-        "button_2_link": "shopify://pages/gift-guide"
+        "button_2_label": "Find a starter set",
+        "button_2_link": "#px-finder",
+        "facts": "Starter packs from [price]. Safety tested for ages 3 and up.",
+        "facts_fallback": "Safety tested for ages 3 and up. Every range connects.",
+        "facts_collection": "starter-sets"
       },
       "blocks": {
         "h_pastel": {
@@ -270,57 +273,11 @@
         "h_roads"
       ]
     },
-    "px_trust": {
-      "type": "px-trust-strip",
-      "settings": {
-        "label": "Why shop with us"
-      },
-      "blocks": {
-        "t1": {
-          "type": "item",
-          "settings": {
-            "icon": "currency",
-            "title": "Prices in AED",
-            "text": "Shown in UAE dirhams."
-          }
-        },
-        "t2": {
-          "type": "item",
-          "settings": {
-            "icon": "lock",
-            "title": "Secure checkout",
-            "text": "Encrypted Shopify checkout."
-          }
-        },
-        "t3": {
-          "type": "item",
-          "settings": {
-            "icon": "tile",
-            "title": "Every pack connects",
-            "text": "All CONNETIX tiles work together."
-          }
-        },
-        "t4": {
-          "type": "item",
-          "settings": {
-            "icon": "shield",
-            "title": "Safety tested for 3+",
-            "text": "Non-toxic ABS, free from BPA, lead and phthalates."
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3",
-        "t4"
-      ]
-    },
     "px_worlds": {
       "type": "px-range-worlds",
       "settings": {
         "heading": "Shop by range",
-        "text": "Every CONNETIX range connects with every other, so you can mix colours as a collection grows."
+        "text": "Every range connects with every other, so a collection can grow one pack at a time."
       },
       "blocks": {
         "r_pastel": {
@@ -675,13 +632,12 @@
   },
   "order": [
     "px_hero",
-    "px_trust",
     "px_worlds",
-    "product_list_fa6P9H",
     "px_made",
+    "product_list_fa6P9H",
     "px_reel",
-    "px_finder",
     "px_awards",
-    "px_story"
+    "px_story",
+    "px_finder"
   ]
 }

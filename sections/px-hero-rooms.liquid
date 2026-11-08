@@ -1,17 +1,32 @@
 {%- comment -%}
-  Homepage hero. Copy on the left; on the right, CONNETIX range photographs set as
-  four tiles that snap together on load, like magnetic tiles meeting at an edge.
-  Each tile sits on its photo's own backdrop colour, so the photograph has no hard edge.
-  This is the page's one orchestrated motion moment; it is skipped for reduced motion.
+  Homepage hero. Copy on the left; on the right, four CONNETIX range photographs set as
+  tiles that snap together on load, like magnetic tiles meeting at an edge, then flash
+  once along their seams ("click"). On a mouse or trackpad the tiles lean a few pixels
+  toward the pointer (px-motion.js). This is the page's one orchestrated motion moment.
+  Photos never fade, so the first one paints at once (LCP). Reduced motion: no movement.
 {%- endcomment -%}
+{%- liquid
+  assign facts = section.settings.facts
+  if facts contains '[price]'
+    assign from_price = ''
+    if section.settings.facts_collection != blank and section.settings.facts_collection.products_count > 0
+      assign from_price = section.settings.facts_collection.price_min | money_without_trailing_zeros
+    endif
+    if from_price == ''
+      assign facts = section.settings.facts_fallback
+    else
+      assign facts = facts | replace: '[price]', from_price
+    endif
+  endif
+-%}
 <section class="px-hero" aria-labelledby="PxHeroTitle-{{ section.id }}">
   <div class="px-hero__inner">
     <div class="px-hero__copy">
-      <h1 class="px-hero__title" id="PxHeroTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h1>
+      <h1 class="px-hero__title" id="PxHeroTitle-{{ section.id }}" style="--i: 0;">{{ section.settings.heading | escape }}</h1>
       {%- if section.settings.text != blank -%}
-        <div class="px-hero__text">{{ section.settings.text }}</div>
+        <div class="px-hero__text" style="--i: 1;">{{ section.settings.text }}</div>
       {%- endif -%}
-      <div class="px-hero__actions">
+      <div class="px-hero__actions" style="--i: 2;">
         {%- if section.settings.button_1_label != blank -%}
           <a class="px-btn px-btn--primary" href="{{ section.settings.button_1_link | default: routes.all_products_collection_url }}">
             {{- section.settings.button_1_label | escape -}}
@@ -23,9 +38,12 @@
           </a>
         {%- endif -%}
       </div>
+      {%- if facts != blank -%}
+        <p class="px-hero__facts" style="--i: 3;">{{ facts | escape }}</p>
+      {%- endif -%}
     </div>
 
-    <ul class="px-hero__tiles" role="list" data-px-snap-in>
+<ul class="px-hero__tiles" role="list" data-px-snap-in data-px-lean>
       {%- for block in section.blocks limit: 4 -%}
         {%- liquid
           assign img = block.settings.image
@@ -69,27 +87,31 @@
 {% stylesheet %}
   .px-hero {
     padding-inline: var(--page-margin, 16px);
-    padding-block: clamp(24px, 4vw, 56px) clamp(40px, 6vw, 88px);
+    padding-block: clamp(20px, 3.5vw, 48px) clamp(40px, 6vw, 88px);
     background: var(--px-paper);
     color: var(--px-ink);
   }
 
   .px-hero__inner {
     display: grid;
-    gap: clamp(28px, 4vw, 64px);
+    gap: clamp(28px, 4vw, 72px);
     align-items: center;
     max-inline-size: var(--page-content-width, 1280px);
     margin-inline: auto;
   }
 
+  .px-hero__copy {
+    min-inline-size: 0;
+  }
+
   @media screen and (min-width: 990px) {
     .px-hero__inner {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     }
 
     /* Keep the whole hero, buttons included, inside a laptop screen */
     .px-hero__tiles {
-      inline-size: min(100%, calc((100svh - 220px) * 1.2));
+      inline-size: min(100%, calc((100svh - 200px) * 1.2));
       justify-self: end;
     }
 
@@ -100,20 +122,23 @@
 
   .px-hero__title {
     margin: 0;
-    max-inline-size: 13ch;
-    font-size: clamp(2.5rem, 5.6vw, 4.5rem);
-    font-weight: 700;
-    line-height: 1.02;
-    letter-spacing: -0.025em;
+    max-inline-size: 12ch;
+    font-family: var(--font-heading--family);
+    font-size: clamp(2.625rem, 4.4vw + 1rem, 5.25rem);
+    font-weight: var(--font-heading--weight, 700);
+    line-height: 1;
+    letter-spacing: -0.03em;
     color: var(--px-ink);
     text-wrap: balance;
+    overflow-wrap: break-word;
   }
 
   .px-hero__text {
-    max-inline-size: 44ch;
+    max-inline-size: 40ch;
     margin-block-start: var(--px-space-5, 24px);
-    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    font-size: clamp(1.0625rem, 0.4vw + 0.95rem, 1.25rem);
     line-height: 1.55;
+    text-wrap: pretty;
   }
 
   .px-hero__text p {
@@ -125,6 +150,15 @@
     flex-wrap: wrap;
     gap: var(--px-space-3, 12px);
     margin-block-start: var(--px-space-6, 32px);
+  }
+
+  .px-hero__facts {
+    margin: var(--px-space-5, 24px) 0 0;
+    max-inline-size: 44ch;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--px-ink-soft);
+    font-variant-numeric: tabular-nums;
   }
 
   .px-hero__tiles {
@@ -143,6 +177,18 @@
     overflow: hidden;
     background: var(--room, var(--px-mist));
     box-shadow: var(--px-bevel);
+    transition: translate 420ms var(--px-ease-out);
+  }
+
+  /* The "click": a light line runs round each tile once they meet */
+  .px-hero__tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.9);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .px-hero__tile-link {
@@ -157,7 +203,7 @@
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
-    transition: transform var(--px-d-l, 560ms) var(--px-ease-standard);
+    transition: scale var(--px-d-l, 560ms) var(--px-ease-out);
   }
 
   .px-hero__label {
@@ -168,14 +214,15 @@
     border-radius: var(--px-radius-pill, 999px);
     background: var(--px-white);
     font-size: clamp(0.8125rem, 1vw, 0.9375rem);
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.2;
     box-shadow: var(--px-shadow-1);
+    white-space: nowrap;
   }
 
-  @media (hover: hover) {
+  @media (hover: hover) and (pointer: fine) {
     .px-hero__tile-link:hover .px-hero__img {
-      transform: scale(1.04);
+      scale: 1.04;
     }
   }
 
@@ -185,18 +232,32 @@
     border-radius: inherit;
   }
 
-  /* The snap: tiles start a little apart and tilted, then meet with a small overshoot. */
   @media (prefers-reduced-motion: no-preference) {
-    [data-px-snap-in] .px-hero__tile {
-      animation: px-hero-snap 640ms var(--px-ease-snap) both;
-      animation-delay: calc(var(--i) * 70ms);
+    /* Copy: the heading rises (no fade, so it paints at once); the rest follow */
+    .px-hero__copy > * {
+      animation: px-hero-rise 600ms var(--px-ease-enter) both;
+      animation-delay: calc(var(--i, 0) * 110ms);
     }
 
-    /* Each tile arrives from its own corner */
-    [data-px-snap-in] .px-hero__tile:nth-child(1) { --from-x: -20px; --from-y: -20px; --from-r: -3deg; }
-    [data-px-snap-in] .px-hero__tile:nth-child(2) { --from-x: 20px; --from-y: -20px; --from-r: 3deg; }
-    [data-px-snap-in] .px-hero__tile:nth-child(3) { --from-x: -20px; --from-y: 20px; --from-r: 3deg; }
-    [data-px-snap-in] .px-hero__tile:nth-child(4) { --from-x: 20px; --from-y: 20px; --from-r: -3deg; }
+    .px-hero__copy > :not(.px-hero__title) {
+      animation-name: px-hero-rise-in;
+    }
+
+    /* Tiles: each starts a little apart and tilted, then meets the others with one overshoot */
+    [data-px-snap-in] .px-hero__tile {
+      animation: px-hero-snap 560ms var(--px-ease-snap) both;
+      animation-delay: calc(80ms + var(--i) * 60ms);
+    }
+
+    [data-px-snap-in] .px-hero__tile::after {
+      animation: px-hero-click 380ms var(--px-ease-out) both;
+      animation-delay: calc(560ms + var(--i) * 60ms);
+    }
+
+    [data-px-snap-in] .px-hero__tile:nth-child(1) { --from-x: -28px; --from-y: -24px; --from-r: -4deg; }
+    [data-px-snap-in] .px-hero__tile:nth-child(2) { --from-x: 28px; --from-y: -24px; --from-r: 4deg; }
+    [data-px-snap-in] .px-hero__tile:nth-child(3) { --from-x: -28px; --from-y: 24px; --from-r: 3deg; }
+    [data-px-snap-in] .px-hero__tile:nth-child(4) { --from-x: 28px; --from-y: 24px; --from-r: -3deg; }
   }
 
   /* Transform only (no fade), so the first photo paints at once and stays the LCP element */
@@ -207,6 +268,22 @@
     to {
       transform: none;
     }
+  }
+
+  @keyframes px-hero-click {
+    0% { opacity: 0; }
+    35% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes px-hero-rise {
+    from { transform: translateY(14px); }
+    to { transform: none; }
+  }
+
+  @keyframes px-hero-rise-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
   }
 {% endstylesheet %}
 
@@ -247,6 +324,24 @@
       "type": "url",
       "id": "button_2_link",
       "label": "Second button link"
+    },
+    {
+      "type": "text",
+      "id": "facts",
+      "label": "Facts line",
+      "info": "[price] is replaced by the lowest price in the collection below.",
+      "default": "Starter packs from [price]. Safety tested for ages 3 and up."
+    },
+    {
+      "type": "collection",
+      "id": "facts_collection",
+      "label": "Collection for [price]"
+    },
+    {
+      "type": "text",
+      "id": "facts_fallback",
+      "label": "Facts line without a price",
+      "default": "Safety tested for ages 3 and up. Every range connects."
     }
   ],
   "blocks": [

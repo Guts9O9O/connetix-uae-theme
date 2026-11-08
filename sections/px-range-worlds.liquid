@@ -1,19 +1,21 @@
 {%- comment -%}
-  Shop by range. One card per range collection. The name sits on the range colour at the
-  top; the CONNETIX range photograph below starts on that same colour, so the child appears
-  to stand in the card and the white tabletop becomes the card's floor.
-  Without a photograph, the range's best pack sits on a white stage inside its colour.
-  Mobile: a swipeable row. Desktop: a grid.
+  Shop by range, set as an index. Desktop: the range names run down the left; the range
+  photograph for the row under the pointer (or keyboard focus) fills the stage on the right,
+  on its own backdrop colour, and a small tile mark snaps beside the name.
+  Tablet and phone: a swipeable row of cards, photo first.
+  Without JavaScript every row is still a plain link and the first photo shows.
+  Ranges without a photograph show their best pack on a white stage inside the colour.
 {%- endcomment -%}
-<section class="px-worlds" aria-labelledby="PxWorldsTitle-{{ section.id }}">
-  <div class="px-worlds__inner">
+<section class="px-ri" aria-labelledby="PxRangeTitle-{{ section.id }}" data-px-range-index>
+  <div class="px-ri__inner">
     <div class="px-head">
-      <h2 class="px-head__title" id="PxWorldsTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      <h2 class="px-head__title" id="PxRangeTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
       {%- if section.settings.text != blank -%}
         <p class="px-head__text">{{ section.settings.text | escape }}</p>
       {%- endif -%}
     </div>
-    <ul class="px-worlds__grid" role="list">
+    <ul class="px-ri__list" role="list">
+      {%- assign shown = 0 -%}
       {%- for block in section.blocks -%}
         {%- assign c = block.settings.collection -%}
         {%- if c != blank -%}
@@ -32,46 +34,44 @@
               endif
             endif
             assign title = block.settings.title | default: c.title
+            assign shown = shown | plus: 1
           -%}
           <li
-            class="px-world-card{% if photo != blank %} px-world-card--photo{% endif %}"
+            class="px-ri__item{% if shown == 1 %} is-active{% endif %}"
             data-range="{{ block.settings.range }}"
-            {% if block.settings.room != blank %}
-              style="--range-backdrop: {{ block.settings.room }};"
-            {% endif %}
+            style="--i: {{ shown | minus: 1 }};{% if block.settings.room != blank %} --room: {{ block.settings.room }};{% endif %}"
             {{ block.shopify_attributes }}
           >
-            <a class="px-world-card__link" href="{{ c.url }}">
-              <span class="px-world-card__body">
-                <span class="px-world-card__name">{{ title | escape }}</span>
-                {%- if block.settings.note != blank -%}
-                  <span class="px-world-card__note">{{ block.settings.note | escape }}</span>
-                {%- endif -%}
-                <span class="px-world-card__count">{{ 'px.products_count' | t: count_text: c.products_count }}</span>
-              </span>
-              <span class="px-world-card__media">
+            <a class="px-ri__link" href="{{ c.url }}">
+              <span class="px-ri__mark" aria-hidden="true"></span>
+              <span class="px-ri__name">{{ title | escape }}</span>
+              {%- if block.settings.note != blank -%}
+                <span class="px-ri__note">{{ block.settings.note | escape }}</span>
+              {%- endif -%}
+              <span class="px-ri__count">{{ 'px.products_count' | t: count_text: c.products_count }}</span>
+              <span class="px-ri__media{% if photo == blank %} px-ri__media--pack{% endif %}">
                 {%- if photo != blank -%}
                   {{
                     photo
-                    | image_url: width: 900
+                    | image_url: width: 1200
                     | image_tag:
                       loading: 'lazy',
-                      widths: '360, 540, 720, 900',
-                      sizes: '(min-width: 990px) 30vw, (min-width: 750px) 45vw, 80vw',
+                      widths: '360, 540, 720, 960, 1200',
+                      sizes: '(min-width: 990px) 46vw, (min-width: 750px) 42vw, 76vw',
                       alt: '',
-                      class: 'px-world-card__photo'
+                      class: 'px-ri__photo'
                   }}
                 {%- elsif pack != blank -%}
-                  <span class="px-world-card__stage">
+                  <span class="px-ri__stage">
                     {{
                       pack
-                      | image_url: width: 600
+                      | image_url: width: 800
                       | image_tag:
                         loading: 'lazy',
-                        widths: '300, 450, 600',
-                        sizes: '(min-width: 990px) 22vw, 60vw',
+                        widths: '300, 450, 600, 800',
+                        sizes: '(min-width: 990px) 30vw, 60vw',
                         alt: '',
-                        class: 'px-world-card__pack'
+                        class: 'px-ri__pack'
                     }}
                   </span>
                 {%- endif -%}
@@ -85,135 +85,262 @@
 </section>
 
 {% stylesheet %}
-  .px-worlds {
-    padding-block: clamp(48px, 7vw, 96px);
+  .px-ri {
+    padding-block: clamp(56px, 8vw, 128px);
     padding-inline: var(--page-margin, 16px);
     background: var(--px-paper);
     color: var(--px-ink);
   }
 
-  .px-worlds__inner {
+  .px-ri__inner {
     max-inline-size: var(--page-content-width, 1280px);
     margin-inline: auto;
   }
 
-  .px-worlds__grid {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min(78vw, 340px);
-    gap: 12px;
-    margin: 0;
-    margin-inline: calc(-1 * var(--page-margin, 16px));
-    padding: 0 var(--page-margin, 16px) 8px;
+  .px-ri__list {
+    margin: clamp(24px, 3vw, 40px) 0 0;
+    padding: 0;
     list-style: none;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--page-margin, 16px);
-    scrollbar-width: thin;
   }
 
-  @media screen and (min-width: 990px) {
-    .px-worlds__grid {
-      grid-auto-flow: row;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-auto-columns: auto;
-      gap: 16px;
-      margin-inline: 0;
-      padding: 0;
-      overflow: visible;
-    }
+  .px-ri__item {
+    --room-bg: var(--room, var(--range-backdrop, var(--px-mist)));
   }
 
-  .px-world-card {
-    scroll-snap-align: start;
-    border-radius: var(--px-radius-panel, 24px);
-    background: var(--range-backdrop);
-    color: var(--range-ink);
-    overflow: hidden;
-    box-shadow: var(--px-bevel);
-  }
-
-  .px-world-card__link {
-    display: flex;
-    flex-direction: column;
-    block-size: 100%;
-    color: inherit;
+  .px-ri__link {
+    color: var(--px-ink);
     text-decoration: none;
   }
 
-  .px-world-card__media {
-    position: relative;
-    display: block;
-    flex: 1 0 auto;
-    aspect-ratio: 3 / 2;
-    overflow: hidden;
+  .px-ri__name {
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight, 700);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
   }
 
-  .px-world-card__photo {
+  .px-ri__note {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--px-ink-soft);
+  }
+
+  .px-ri__count {
+    font-size: 0.875rem;
+    line-height: 1.3;
+    color: var(--px-ink-soft);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .px-ri__media {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: var(--room-bg);
+  }
+
+  .px-ri__photo {
     display: block;
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
-    object-position: 50% 30%;
-    transition: transform var(--px-d-l, 560ms) var(--px-ease-standard);
   }
 
-  .px-world-card__stage {
+  .px-ri__stage {
     position: absolute;
-    inset: 0 12px 12px;
-    border-radius: var(--px-radius-card, 16px);
+    inset: 12px;
+    border-radius: calc(var(--px-radius-card, 16px) - 4px);
     background: var(--px-white);
   }
 
-  .px-world-card__pack {
+  .px-ri__pack {
     position: absolute;
     inset: 0;
-    display: block;
-    inline-size: 76%;
-    block-size: 84%;
+    inline-size: 74%;
+    block-size: 80%;
     margin: auto;
     object-fit: contain;
-    transition: transform var(--px-d-l, 560ms) var(--px-ease-snap);
   }
 
-  .px-world-card__body {
-    display: grid;
-    gap: 2px;
-    padding: 20px 20px 14px;
-  }
-
-  .px-world-card__name {
-    font-size: 1.375rem;
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-  }
-
-  .px-world-card__note {
-    font-size: 0.9375rem;
-    line-height: 1.4;
-  }
-
-  .px-world-card__count {
-    font-size: 0.875rem;
-    opacity: 0.8;
-  }
-
-  @media (hover: hover) {
-    .px-world-card__link:hover .px-world-card__photo {
-      transform: scale(1.04);
-    }
-
-    .px-world-card__link:hover .px-world-card__pack {
-      transform: translateY(-4px) rotate(-2deg);
-    }
-  }
-
-  .px-world-card__link:focus-visible {
+  .px-ri__link:focus-visible {
     outline: var(--focus-outline-width, 3px) solid var(--px-ink);
-    outline-offset: -5px;
-    border-radius: var(--px-radius-panel, 24px);
+    outline-offset: 4px;
+    border-radius: 12px;
+  }
+
+  /* ---------- Tablet and phone: a swipeable row of cards ---------- */
+  @media screen and (max-width: 989px) {
+    .px-ri__list {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 72%);
+      gap: 12px;
+      margin-inline: calc(var(--page-margin, 16px) * -1);
+      padding-inline: var(--page-margin, 16px);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--page-margin, 16px);
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+    }
+
+    .px-ri__list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .px-ri__item {
+      scroll-snap-align: start;
+    }
+
+    .px-ri__link {
+      display: grid;
+      gap: 4px;
+      block-size: 100%;
+      padding: 0 0 4px;
+    }
+
+    .px-ri__media {
+      order: -1;
+      aspect-ratio: 4 / 5;
+      margin-block-end: 10px;
+      border-radius: var(--px-radius-card, 16px);
+    }
+
+    .px-ri__mark {
+      display: none;
+    }
+
+    .px-ri__name {
+      font-size: 1.375rem;
+    }
+  }
+
+  @media screen and (min-width: 600px) and (max-width: 989px) {
+    .px-ri__list {
+      grid-auto-columns: minmax(0, 40%);
+    }
+  }
+
+  /* ---------- Desktop: index and stage ---------- */
+  @media screen and (min-width: 990px) {
+    .px-ri__list {
+      --ri-gap: clamp(32px, 4vw, 64px);
+      position: relative;
+      display: grid;
+      inline-size: calc((100% - var(--ri-gap)) * 5 / 11);
+      min-block-size: min(76svh, 720px);
+      align-content: start;
+    }
+
+    .px-ri__item {
+      border-block-end: 1px solid var(--px-line-soft);
+    }
+
+    .px-ri__item:first-child {
+      border-block-start: 1px solid var(--px-line-soft);
+    }
+
+    .px-ri__link {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr) auto;
+      grid-template-areas:
+        'mark name count'
+        'mark note count';
+      column-gap: 14px;
+      align-items: center;
+      padding-block: 14px;
+    }
+
+    .px-ri__mark {
+      grid-area: mark;
+      inline-size: 14px;
+      aspect-ratio: 1;
+      border-radius: 4px;
+      background: var(--room-bg);
+      box-shadow: inset 0 0 0 1px rgb(24 39 79 / 0.12);
+      scale: 0.4;
+      opacity: 0;
+      transition:
+        scale 220ms var(--px-ease-out),
+        opacity 160ms var(--px-ease-out);
+    }
+
+    .px-ri__name {
+      grid-area: name;
+      font-size: clamp(1.5rem, 1.6vw + 0.5rem, 2.125rem);
+      transition: translate 220ms var(--px-ease-out), opacity 160ms var(--px-ease-out);
+    }
+
+    .px-ri__note {
+      grid-area: note;
+      font-size: 0.875rem;
+      display: none;
+    }
+
+    .px-ri__count {
+      grid-area: count;
+    }
+
+    .px-ri__item.is-active .px-ri__note {
+      display: block;
+    }
+
+    .px-ri__item.is-active .px-ri__mark {
+      scale: 1;
+      opacity: 1;
+      transition:
+        scale 320ms var(--px-ease-snap),
+        opacity 120ms var(--px-ease-out);
+    }
+
+    .px-ri__list:has(.is-active) .px-ri__item:not(.is-active) .px-ri__name {
+      opacity: 0.55;
+    }
+
+    .px-ri__item.is-active .px-ri__name {
+      translate: 4px 0;
+    }
+
+    /* The stage: every range photo sits in the same place; only the active one shows */
+    .px-ri__media {
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: calc(100% + var(--ri-gap));
+      inline-size: calc(100% * 6 / 5);
+      border-radius: var(--px-radius-panel, 24px);
+      opacity: 0;
+      visibility: hidden;
+      scale: 1.03;
+      transition:
+        opacity 260ms var(--px-ease-out),
+        scale 420ms var(--px-ease-out),
+        visibility 0s linear 260ms;
+    }
+
+    .px-ri__item.is-active .px-ri__media {
+      opacity: 1;
+      visibility: visible;
+      scale: 1;
+      transition:
+        opacity 260ms var(--px-ease-out),
+        scale 420ms var(--px-ease-out),
+        visibility 0s;
+    }
+
+    .px-ri__stage {
+      inset: 24px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .px-ri__media,
+    .px-ri__mark,
+    .px-ri__name {
+      transition-duration: 1ms !important;
+      scale: 1 !important;
+      translate: none !important;
+    }
   }
 {% endstylesheet %}
 

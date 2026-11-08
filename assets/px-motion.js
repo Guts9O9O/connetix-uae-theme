@@ -70,3 +70,85 @@ function setupVideos(root = document) {
 
 setupVideos();
 document.addEventListener('shopify:section:load', (event) => setupVideos(event.target));
+
+/*
+ * Hero tiles lean toward the pointer, a few pixels at most, like tiles feeling a magnet
+ * nearby. Mouse and trackpad only; nothing moves with reduced motion. Each tile's own
+ * `translate` is set directly (the snap-in animation owns `transform`).
+ */
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+function setupLean(root = document) {
+  root.querySelectorAll('[data-px-lean]').forEach((grid) => {
+    if (grid.dataset.pxLeanReady) return;
+    grid.dataset.pxLeanReady = 'true';
+    const tiles = [...grid.children];
+    const MAX = 6;
+    let frame = 0;
+    let rects = [];
+
+    const measure = () => {
+      rects = tiles.map((tile) => tile.getBoundingClientRect());
+    };
+
+    const reset = () => {
+      cancelAnimationFrame(frame);
+      tiles.forEach((tile) => {
+        tile.style.translate = '';
+      });
+    };
+
+    grid.addEventListener('pointerenter', (event) => {
+      if (event.pointerType !== 'mouse' || reduceMotion.matches || !finePointer.matches) return;
+      measure();
+    });
+
+    grid.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse' || reduceMotion.matches || !finePointer.matches || !rects.length) return;
+      const { clientX: x, clientY: y } = event;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        tiles.forEach((tile, i) => {
+          const r = rects[i];
+          const dx = x - (r.left + r.width / 2);
+          const dy = y - (r.top + r.height / 2);
+          const distance = Math.hypot(dx, dy) || 1;
+          const pull = Math.max(0, 1 - distance / (r.width * 1.6));
+          tile.style.translate = `${((dx / distance) * MAX * pull).toFixed(2)}px ${((dy / distance) * MAX * pull).toFixed(2)}px`;
+        });
+      });
+    });
+
+    grid.addEventListener('pointerleave', reset);
+    window.addEventListener('scroll', () => rects.length && measure(), { passive: true });
+  });
+}
+
+/*
+ * Shop by range index: the row under the pointer, or with keyboard focus, becomes active
+ * and its photograph fills the stage. Rows stay plain links; clicking navigates.
+ */
+function setupRangeIndex(root = document) {
+  root.querySelectorAll('[data-px-range-index]').forEach((section) => {
+    if (section.dataset.pxReady) return;
+    section.dataset.pxReady = 'true';
+    const items = [...section.querySelectorAll('.px-ri__item')];
+    const activate = (item) => {
+      if (!item || item.classList.contains('is-active')) return;
+      items.forEach((other) => other.classList.toggle('is-active', other === item));
+    };
+    items.forEach((item) => {
+      item.addEventListener('pointerenter', (event) => {
+        if (event.pointerType === 'mouse') activate(item);
+      });
+      item.addEventListener('focusin', () => activate(item));
+    });
+  });
+}
+
+setupLean();
+setupRangeIndex();
+document.addEventListener('shopify:section:load', (event) => {
+  setupLean(event.target);
+  setupRangeIndex(event.target);
+});

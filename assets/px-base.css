@@ -145,10 +145,12 @@ html fly-to-cart {
   line-height: 1.1;
   text-decoration: none;
   cursor: pointer;
+  white-space: nowrap;
   transition:
-    background-color var(--px-d-s) var(--px-ease-standard),
-    color var(--px-d-s) var(--px-ease-standard),
-    transform var(--px-d-s) var(--px-ease-snap);
+    background-color 150ms var(--px-ease-out),
+    border-color 150ms var(--px-ease-out),
+    color 150ms var(--px-ease-out),
+    transform 140ms var(--px-ease-out);
 }
 
 .px-btn--primary {
@@ -180,6 +182,12 @@ html fly-to-cart {
 
 .px-btn:active {
   transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .px-btn:active {
+    transform: none;
+  }
 }
 
 .px-btn:focus-visible {
@@ -247,4 +255,61 @@ html fly-to-cart {
 
 .px-video-wrap.is-playing .px-video-toggle__pause {
   display: block;
+}
+
+
+/* ---------- Built, not assembled: browser chrome in the brand ---------- */
+::selection {
+  background: color-mix(in srgb, var(--px-room-aqua) 55%, var(--px-white));
+  color: var(--px-ink);
+}
+
+html {
+  scrollbar-color: color-mix(in srgb, var(--px-ink) 35%, transparent) transparent;
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+  caret-color: var(--px-ink);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Horizon controls: the same tactile press as ours ---------- */
+.button,
+.button-secondary,
+.add-to-cart-button,
+.quick-add__button {
+  transition-property: background-color, border-color, color, box-shadow, transform;
+  transition-timing-function: var(--px-ease-out);
+}
+
+.button:active:not([disabled]),
+.button-secondary:active:not([disabled]),
+.add-to-cart-button:active:not([disabled]),
+.quick-add__button:active:not([disabled]) {
+  transform: scale(0.97);
+  transition-duration: 120ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:active,
+  .button-secondary:active,
+  .add-to-cart-button:active,
+  .quick-add__button:active {
+    transform: none;
+  }
+}
+
+/* ---------- Product cards ---------- */
+.product-card .price,
+.product-card [ref='priceContainer'] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Mega menu: range photographs ---------- */
+.mega-menu__link-image,
+.menu-list__image,
+.mega-menu img {
+  border-radius: var(--px-radius-card, 16px);
 }

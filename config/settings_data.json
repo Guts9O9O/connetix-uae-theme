@@ -11,10 +11,10 @@
   "current": {
     "logo_height": 36,
     "logo_height_mobile": 28,
-    "type_body_font": "rubik_n4",
-    "type_subheading_font": "rubik_n5",
-    "type_heading_font": "rubik_n6",
-    "type_accent_font": "rubik_n7",
+    "type_body_font": "nunito_n4",
+    "type_subheading_font": "nunito_n6",
+    "type_heading_font": "nunito_n7",
+    "type_accent_font": "nunito_n7",
     "type_size_paragraph": "16",
     "type_line_height_paragraph": "body-loose",
     "type_font_h1": "heading",
@@ -42,8 +42,8 @@
     "type_size_h6": "12",
     "type_line_height_h6": "display-loose",
     "page_width": "normal",
-    "page_transition_enabled": false,
-    "transition_to_main_product": false,
+    "page_transition_enabled": true,
+    "transition_to_main_product": true,
     "card_hover_effect": "lift",
     "badge_position": "top-right",
     "badge_corner_radius": 100,
@@ -88,11 +88,12 @@
     "show_second_image_on_hover": true,
     "mobile_quick_add": true,
     "currency_code_enabled_cart_total": false,
-    "px_preview_flag": true,
+    "px_preview_flag": false,
     "palette_input_background": "#FFFFFF",
     "badge_sale_background_color": "#FDD7E4",
     "badge_sale_text_color": "#18274F",
-    "badge_sold_out_text_color": "#18274F"
+    "badge_sold_out_text_color": "#18274F",
+    "add_to_cart_animation": true
   },
   "presets": {
     "Default": {

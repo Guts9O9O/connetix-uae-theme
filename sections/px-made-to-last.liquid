@@ -1,10 +1,16 @@
 {%- comment -%}
   "Made to last": CONNETIX's own build-quality points next to their tile video.
   The section background is white to match the video's studio background.
+  Desktop: the video stays in view while the points scroll past it. The page's one
+  scroll-linked moment lives here: the video frame settles into place as the section
+  arrives, and each point's tile mark snaps in as it reaches the middle of the screen.
+  Both are CSS scroll timelines (no scroll listeners); without support, or with reduced
+  motion, everything simply shows in its finished state.
 {%- endcomment -%}
 <section class="px-made" aria-labelledby="PxMadeTitle-{{ section.id }}">
   <div class="px-made__inner">
     <div class="px-made__media">
+      <div class="px-made__frame">
       {%- render 'px-video',
         video: section.settings.video,
         url: section.settings.video_url,
@@ -13,6 +19,7 @@
         class: 'px-made__video',
         label: section.settings.video_label
       -%}
+      </div>
     </div>
     <div class="px-made__copy">
       <div class="px-head">
@@ -36,82 +43,139 @@
 
 {% stylesheet %}
   .px-made {
-    padding-block: clamp(48px, 7vw, 104px);
+    padding-block: clamp(56px, 8vw, 144px);
     padding-inline: var(--page-margin, 16px);
-    background: #fff;
+    background: var(--px-white);
     color: var(--px-ink);
+    view-timeline-name: --px-made;
   }
 
   .px-made__inner {
     display: grid;
-    gap: clamp(28px, 5vw, 72px);
-    align-items: center;
+    gap: clamp(28px, 5vw, 80px);
+    align-items: start;
     max-inline-size: var(--page-content-width, 1280px);
     margin-inline: auto;
   }
 
-  @media screen and (min-width: 990px) {
-    .px-made__inner {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    }
-  }
-
   .px-made__video {
     border-radius: var(--px-radius-panel, 24px);
-    background: #fff;
-  }
-
-  @media screen and (max-width: 989px) {
-    .px-made__media {
-      inline-size: min(100%, 360px);
-      margin-inline: auto;
-    }
+    background: var(--px-white);
   }
 
   .px-made__list {
     display: grid;
-    gap: clamp(20px, 2.4vw, 32px) clamp(20px, 3vw, 40px);
-    margin: 0;
+    gap: clamp(20px, 2.4vw, 28px);
+    margin: clamp(28px, 3vw, 40px) 0 0;
     padding: 0;
     list-style: none;
   }
 
-  @media screen and (min-width: 750px) {
-    .px-made__list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
   .px-made__item {
     display: grid;
-    grid-template-columns: 28px 1fr;
-    column-gap: 14px;
-    row-gap: 4px;
+    grid-template-columns: 32px minmax(0, 1fr);
+    column-gap: 16px;
+    row-gap: 6px;
   }
 
   /* A small bevelled tile in a range colour */
   .px-made__mark {
     grid-row: span 2;
-    inline-size: 22px;
-    block-size: 22px;
-    margin-block-start: 3px;
-    border-radius: 6px;
+    inline-size: 24px;
+    block-size: 24px;
+    margin-block-start: 4px;
+    border-radius: 7px;
     background: var(--chip, var(--px-sky));
     box-shadow: inset 0 0 0 3px rgb(255 255 255 / 0.55);
   }
 
   .px-made__name {
     margin: 0;
-    font-size: 1.125rem;
+    font-size: clamp(1.125rem, 0.6vw + 0.95rem, 1.5rem);
     font-weight: 700;
-    line-height: 1.25;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
     color: inherit;
   }
 
   .px-made__text {
     margin: 0;
-    font-size: 0.9875rem;
-    line-height: 1.55;
+    max-inline-size: 46ch;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--px-ink-soft);
+  }
+
+  @media screen and (max-width: 989px) {
+    .px-made__media {
+      inline-size: min(100%, 420px);
+      margin-inline: auto;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .px-made__inner {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+
+    .px-made__media {
+      position: sticky;
+      inset-block-start: calc(var(--header-height, 72px) + 32px);
+    }
+
+    .px-made__list {
+      gap: 0;
+    }
+
+    .px-made__item {
+      padding-block: clamp(24px, 3vw, 40px);
+      border-block-end: 1px solid var(--px-line-soft);
+    }
+
+    .px-made__item:last-child {
+      border-block-end: 0;
+    }
+  }
+
+  /* The scroll moment */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 40rem) {
+      .px-made__frame {
+        animation: px-made-settle linear both;
+        animation-timeline: --px-made;
+        animation-range: entry 5% cover 35%;
+      }
+
+      .px-made__mark {
+        animation: px-made-mark linear both;
+        animation-timeline: view();
+        animation-range: entry 40% cover 45%;
+      }
+    }
+  }
+
+  @keyframes px-made-settle {
+    from {
+      transform: translateY(48px) scale(0.9) rotate(-2deg);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  @keyframes px-made-mark {
+    from {
+      transform: scale(0.5) rotate(-45deg);
+      opacity: 0.25;
+    }
+    70% {
+      transform: scale(1.12) rotate(4deg);
+      opacity: 1;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
   }
 {% endstylesheet %}
 
