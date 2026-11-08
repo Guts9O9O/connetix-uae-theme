@@ -398,9 +398,10 @@
   <div
     class="header__underlay header__underlay-open"
   ></div>
-  {%- if request.page_type == 'index' -%}
-    <h1 class="visually-hidden">{{ shop.name }}</h1>
-  {%- endif -%}
+  {%- comment -%}
+    px: Horizon's hidden homepage <h1>{{ shop.name }}</h1> removed — the "Light table hero"
+    section renders the homepage h1. If that section is removed, give another heading h1.
+  {%- endcomment -%}
   {% for row in rows %}
     {% liquid
       assign background = 'background_color_' | append: row
