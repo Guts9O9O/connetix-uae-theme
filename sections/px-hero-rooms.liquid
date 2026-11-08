@@ -188,8 +188,8 @@
   /* The snap: tiles start a little apart and tilted, then meet with a small overshoot. */
   @media (prefers-reduced-motion: no-preference) {
     [data-px-snap-in] .px-hero__tile {
-      animation: px-hero-snap 680ms var(--px-ease-snap) both;
-      animation-delay: calc(120ms + var(--i) * 70ms);
+      animation: px-hero-snap 640ms var(--px-ease-snap) both;
+      animation-delay: calc(var(--i) * 70ms);
     }
 
     /* Each tile arrives from its own corner */
@@ -199,13 +199,12 @@
     [data-px-snap-in] .px-hero__tile:nth-child(4) { --from-x: 20px; --from-y: 20px; --from-r: -3deg; }
   }
 
+  /* Transform only (no fade), so the first photo paints at once and stays the LCP element */
   @keyframes px-hero-snap {
     from {
-      opacity: 0;
       transform: translate(var(--from-x, 0), var(--from-y, 0)) rotate(var(--from-r, 0deg)) scale(0.94);
     }
     to {
-      opacity: 1;
       transform: none;
     }
   }
