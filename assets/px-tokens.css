@@ -95,3 +95,17 @@
 [data-range='light']   { --range-backdrop: var(--px-ink); --range-ink: var(--px-paper); --range-accent: #ffd84d; }
 [data-range='roads']   { --range-backdrop: #e4e7ee; --range-ink: var(--px-ink); --range-accent: var(--px-ink); }
 [data-range='pro']     { --range-backdrop: var(--px-lavender); --range-ink: var(--px-ink); --range-accent: var(--px-ink); }
+
+/*
+ * Per-range tile colours (6 each) for illustrations such as "What's in the box".
+ * Placeholder palette — replace with the brand's official range colours.
+ */
+:root,
+[data-range='rainbow'] { --px-c1: #e94b3c; --px-c2: #f39c33; --px-c3: #f7d23e; --px-c4: #5dbb63; --px-c5: #2f80ed; --px-c6: #8e5bd9; }
+[data-range='pastel']  { --px-c1: #f59db8; --px-c2: #f9c38c; --px-c3: #f5e17a; --px-c4: #9ed9a8; --px-c5: #8ec1f0; --px-c6: #bba3ee; }
+[data-range='bright']  { --px-c1: #ff3d7f; --px-c2: #ff9f1c; --px-c3: #ffd600; --px-c4: #2ec4b6; --px-c5: #3a86ff; --px-c6: #8338ec; }
+[data-range='clear']   { --px-c1: #bfe9f0; --px-c2: #d6f4fa; --px-c3: #e8fbff; --px-c4: #bfe9f0; --px-c5: #d6f4fa; --px-c6: #e8fbff; }
+[data-range='glitter'] { --px-c1: #c9a6f5; --px-c2: #f6a6d4; --px-c3: #9cd4f6; --px-c4: #f8e08e; --px-c5: #c9a6f5; --px-c6: #f6a6d4; }
+[data-range='light']   { --px-c1: #7fd6ff; --px-c2: #ffb3d1; --px-c3: #b5f5a8; --px-c4: #ffe08a; --px-c5: #c7b3ff; --px-c6: #7fd6ff; }
+[data-range='roads']   { --px-c1: #3b4252; --px-c2: #434c5e; --px-c3: #3b4252; --px-c4: #434c5e; --px-c5: #3b4252; --px-c6: #434c5e; }
+[data-range='pro']     { --px-c1: #18274f; --px-c2: #01b0ed; --px-c3: #ec5253; --px-c4: #683c86; --px-c5: #43bcca; --px-c6: #fdd7e4; }

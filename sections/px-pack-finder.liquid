@@ -62,7 +62,8 @@
 
   .px-finder__list {
     display: grid;
-    gap: var(--px-space-4, 16px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--px-space-3, 12px);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -92,6 +93,31 @@
     inline-size: 56px;
     block-size: 56px;
     margin-block-end: var(--px-space-2, 8px);
+  }
+
+  @media screen and (max-width: 749px) {
+    .px-finder__card {
+      padding: var(--px-space-4, 16px);
+      border-radius: var(--px-radius-card, 16px);
+    }
+
+    .px-finder__step {
+      inline-size: 40px;
+      block-size: 40px;
+      margin-block-end: 0;
+    }
+
+    .px-finder__label {
+      font-size: 1.0625rem;
+    }
+
+    .px-finder__hint {
+      font-size: 0.8125rem;
+    }
+
+    .px-finder__go {
+      font-size: 0.875rem;
+    }
   }
 
   .px-finder__label {

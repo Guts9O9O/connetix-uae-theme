@@ -28,7 +28,11 @@
         {%- assign range_name = range_key | t -%}
         <li class="px-chip px-chip--range">
           <span class="px-chip__dot" aria-hidden="true"></span>
-          {{- 'px.range_label' | t: range: range_name -}}
+          {%- if block.settings.size == 'small' -%}
+            {{- range_name -}}
+          {%- else -%}
+            {{- 'px.range_label' | t: range: range_name -}}
+          {%- endif -%}
         </li>
       {%- endif -%}
       {%- if block.settings.show_pieces and pieces != blank -%}
@@ -86,6 +90,8 @@
 
   .px-meta--small .px-meta__chips {
     gap: var(--px-space-1, 4px);
+    flex-wrap: nowrap;
+    overflow: hidden;
   }
 {% endstylesheet %}
 

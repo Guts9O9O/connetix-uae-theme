@@ -72,7 +72,7 @@
 
   .px-box__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
     gap: var(--px-space-3, 12px);
     margin: 0;
     padding: 0;
@@ -94,8 +94,22 @@
   }
 
   .px-box__icon {
-    inline-size: 48px;
-    block-size: 48px;
+    inline-size: 44px;
+    block-size: 44px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .px-box {
+      padding: var(--px-space-4, 16px);
+    }
+
+    .px-box__grid {
+      gap: var(--px-space-2, 8px);
+    }
+
+    .px-box__name {
+      font-size: 0.75rem;
+    }
   }
 
   .px-box__qty {
@@ -122,10 +136,17 @@
   }
 
   .px-shape__body {
-    fill: var(--range-accent);
-    fill-opacity: 0.78;
+    fill: var(--px-tile, var(--range-accent));
+    fill-opacity: 0.82;
     stroke: var(--px-ink);
   }
+
+  .px-box__item:nth-child(6n + 1) { --px-tile: var(--px-c1); }
+  .px-box__item:nth-child(6n + 2) { --px-tile: var(--px-c2); }
+  .px-box__item:nth-child(6n + 3) { --px-tile: var(--px-c3); }
+  .px-box__item:nth-child(6n + 4) { --px-tile: var(--px-c4); }
+  .px-box__item:nth-child(6n + 5) { --px-tile: var(--px-c5); }
+  .px-box__item:nth-child(6n + 6) { --px-tile: var(--px-c6); }
 
   .px-shape--ink .px-shape__body {
     fill: var(--px-ink-soft);
