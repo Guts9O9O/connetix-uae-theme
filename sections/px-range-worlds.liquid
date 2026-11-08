@@ -1,6 +1,7 @@
 {%- comment -%}
-  Shop by range. One card per range collection. Cards with a CONNETIX range photograph
-  take the photograph's backdrop colour, so the child appears to stand in the card.
+  Shop by range. One card per range collection. The name sits on the range colour at the
+  top; the CONNETIX range photograph below starts on that same colour, so the child appears
+  to stand in the card and the white tabletop becomes the card's floor.
   Without a photograph, the range's best pack sits on a white stage inside its colour.
   Mobile: a swipeable row. Desktop: a grid.
 {%- endcomment -%}
@@ -41,6 +42,13 @@
             {{ block.shopify_attributes }}
           >
             <a class="px-world-card__link" href="{{ c.url }}">
+              <span class="px-world-card__body">
+                <span class="px-world-card__name">{{ title | escape }}</span>
+                {%- if block.settings.note != blank -%}
+                  <span class="px-world-card__note">{{ block.settings.note | escape }}</span>
+                {%- endif -%}
+                <span class="px-world-card__count">{{ 'px.products_count' | t: count_text: c.products_count }}</span>
+              </span>
               <span class="px-world-card__media">
                 {%- if photo != blank -%}
                   {{
@@ -67,13 +75,6 @@
                     }}
                   </span>
                 {%- endif -%}
-              </span>
-              <span class="px-world-card__body">
-                <span class="px-world-card__name">{{ title | escape }}</span>
-                {%- if block.settings.note != blank -%}
-                  <span class="px-world-card__note">{{ block.settings.note | escape }}</span>
-                {%- endif -%}
-                <span class="px-world-card__count">{{ 'px.products_count' | t: count_text: c.products_count }}</span>
               </span>
             </a>
           </li>
@@ -142,7 +143,9 @@
   }
 
   .px-world-card__media {
+    position: relative;
     display: block;
+    flex: 1 0 auto;
     aspect-ratio: 3 / 2;
     overflow: hidden;
   }
@@ -157,20 +160,19 @@
   }
 
   .px-world-card__stage {
-    display: grid;
-    place-items: center;
-    block-size: calc(100% - 24px);
-    margin: 12px 12px 0;
+    position: absolute;
+    inset: 0 12px 12px;
     border-radius: var(--px-radius-card, 16px);
     background: var(--px-white);
   }
 
   .px-world-card__pack {
+    position: absolute;
+    inset: 0;
     display: block;
-    max-inline-size: 70%;
-    max-block-size: 86%;
-    inline-size: auto;
-    block-size: auto;
+    inline-size: 76%;
+    block-size: 84%;
+    margin: auto;
     object-fit: contain;
     transition: transform var(--px-d-l, 560ms) var(--px-ease-snap);
   }
@@ -178,7 +180,7 @@
   .px-world-card__body {
     display: grid;
     gap: 2px;
-    padding: 16px 20px 20px;
+    padding: 20px 20px 14px;
   }
 
   .px-world-card__name {

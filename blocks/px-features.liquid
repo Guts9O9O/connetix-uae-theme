@@ -1,15 +1,16 @@
 {%- doc -%}
-  Three short feature notes for a pack, from CONNETIX's own product copy,
-  stored in the product's custom.features JSON metafield:
-  {"title": "…", "items": [{"title": "…", "text": "…"}, …]}
+  Three short feature notes for a pack, from CONNETIX's own product copy.
+  Source: custom.feature_notes (multi-line text), one note per line: "Title|Text".
+  Falls back to custom.features (JSON) {"items": [{"title": "…", "text": "…"}]}.
 {%- enddoc -%}
 {%- liquid
   assign p = closest.product
+  assign notes = p.metafields.custom.feature_notes.value
   assign data = p.metafields.custom.features.value
 -%}
 {%- capture range -%}{%- render 'px-range-of', product: closest.product -%}{%- endcapture -%}
 {%- assign range = range | strip -%}
-{%- if data.items.size > 0 -%}
+{%- if notes != blank or data.items.size > 0 -%}
   <section
     class="px-features"
     {% if range != blank %}
@@ -26,12 +27,25 @@
       {%- endif -%}
     </h2>
     <ul class="px-features__list" role="list">
-      {%- for item in data.items limit: 3 -%}
-        <li class="px-features__item">
-          <h3 class="px-features__name">{{ item.title | escape }}</h3>
-          <p class="px-features__text">{{ item.text | escape }}</p>
-        </li>
-      {%- endfor -%}
+      {%- if notes != blank -%}
+        {%- assign rows = notes | newline_to_br | split: '<br />' -%}
+        {%- for row in rows limit: 3 -%}
+          {%- assign parts = row | strip | split: '|' -%}
+          {%- if parts.size >= 2 -%}
+            <li class="px-features__item">
+              <h3 class="px-features__name">{{ parts[0] | strip | escape }}</h3>
+              <p class="px-features__text">{{ parts[1] | strip | escape }}</p>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for item in data.items limit: 3 -%}
+          <li class="px-features__item">
+            <h3 class="px-features__name">{{ item.title | escape }}</h3>
+            <p class="px-features__text">{{ item.text | escape }}</p>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
     </ul>
   </section>
 {%- endif -%}

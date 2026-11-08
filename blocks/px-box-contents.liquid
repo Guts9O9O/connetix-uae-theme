@@ -1,17 +1,25 @@
 {%- doc -%}
-  "What's in the box": a visual grid of pieces with quantities, from the
-  product's custom.box_contents JSON metafield:
-  {"lines": [{"qty": 16, "name": "Standard Squares", "shape": "square"}, ...]}
-  "name" is CONNETIX's own name for the piece; "shape" picks the icon.
-  Lines without a name fall back to the locale key px.shapes.<shape>.
+  "What's in the box": a visual grid of pieces with quantities.
+
+  Source, in order:
+  1. custom.box_list (multi-line text), one piece per line: "qty|CONNETIX piece name|icon shape",
+     e.g. "16|Standard Squares|square".
+  2. custom.box_contents (JSON) {"lines": [{"qty": 16, "name": "…", "shape": "square"}]},
+     shown only when it is not marked as sample content.
+  Shapes pick the icon (see px-shape-icon); unknown shapes get a plain tile.
 {%- enddoc -%}
 {%- liquid
   assign p = closest.product
+  assign list = p.metafields.custom.box_list.value
   assign data = p.metafields.custom.box_contents.value
+  assign use_json = false
+  if list == blank and data.lines.size > 0 and data.sample != true
+    assign use_json = true
+  endif
 -%}
 {%- capture range -%}{%- render 'px-range-of', product: closest.product -%}{%- endcapture -%}
 {%- assign range = range | strip -%}
-{%- if data.lines.size > 0 -%}
+{%- if list != blank or use_json -%}
   <section
     class="px-box"
     {% if range != blank %}
@@ -27,20 +35,32 @@
       {%- endif -%}
     </div>
     <ul class="px-box__grid" role="list">
-      {%- for line in data.lines -%}
-        {%- assign shape_key = 'px.shapes.' | append: line.shape -%}
-        <li class="px-box__item">
-          <span class="px-box__icon">{% render 'px-shape-icon', shape: line.shape %}</span>
-          <span class="px-box__qty"><bdi>×{{ line.qty }}</bdi></span>
-          <span class="px-box__name">
-            {%- if line.name != blank -%}{{ line.name | escape }}{%- else -%}{{ shape_key | t }}{%- endif -%}
-          </span>
-        </li>
-      {%- endfor -%}
+      {%- if list != blank -%}
+        {%- assign rows = list | newline_to_br | split: '<br />' -%}
+        {%- for row in rows -%}
+          {%- assign parts = row | strip | split: '|' -%}
+          {%- if parts.size >= 2 -%}
+            {%- assign piece_shape = parts[2] | strip -%}
+            <li class="px-box__item">
+              <span class="px-box__icon">{% render 'px-shape-icon', shape: piece_shape %}</span>
+              <span class="px-box__qty"><bdi>×{{ parts[0] | strip }}</bdi></span>
+              <span class="px-box__name">{{ parts[1] | strip | escape }}</span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for line in data.lines -%}
+          {%- assign shape_key = 'px.shapes.' | append: line.shape -%}
+          <li class="px-box__item">
+            <span class="px-box__icon">{% render 'px-shape-icon', shape: line.shape %}</span>
+            <span class="px-box__qty"><bdi>×{{ line.qty }}</bdi></span>
+            <span class="px-box__name">
+              {%- if line.name != blank -%}{{ line.name | escape }}{%- else -%}{{ shape_key | t }}{%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
     </ul>
-    {%- if data.sample -%}
-      <p class="px-box__note">{{ 'px.sample_contents' | t }}</p>
-    {%- endif -%}
   </section>
 {%- endif -%}
 
@@ -126,11 +146,6 @@
     line-height: 1.3;
   }
 
-  .px-box__note {
-    margin: var(--px-space-4, 16px) 0 0;
-    font-size: 0.8125rem;
-    opacity: 0.85;
-  }
 
   .px-shape {
     display: block;

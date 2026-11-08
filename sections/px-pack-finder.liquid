@@ -1,6 +1,6 @@
 {%- comment -%}
   Pack finder: a few "where to start" paths (first set, bigger builds, ball runs, gifts),
-  each linking to a collection. No quiz, no JavaScript.
+  each linking to a collection and shown with a real CONNETIX pack. No quiz, no JavaScript.
 {%- endcomment -%}
 <section class="px-finder" aria-labelledby="PxFinderTitle-{{ section.id }}">
   <div class="px-finder__inner">
@@ -10,24 +10,31 @@
         <p class="px-finder__text">{{ section.settings.text | escape }}</p>
       {%- endif -%}
     </div>
-    <ol class="px-finder__list" role="list">
+    <ul class="px-finder__list" role="list">
       {%- for block in section.blocks -%}
-        {%- assign c = block.settings.collection -%}
+        {%- liquid
+          assign c = block.settings.collection
+          assign pack = block.settings.product.featured_image
+          if pack == blank
+            assign pack = c.products.first.featured_image
+          endif
+        -%}
         <li class="px-finder__item" data-range="{{ block.settings.range }}" {{ block.shopify_attributes }}>
           <a class="px-finder__card" href="{{ c.url | default: routes.all_products_collection_url }}">
-            <span class="px-finder__step" aria-hidden="true">
-              {%- render 'px-shape-icon', shape: block.settings.shape -%}
+            <span class="px-finder__pack" aria-hidden="true">
+              {%- if pack != blank -%}
+                {{ pack | image_url: width: 320 | image_tag: loading: 'lazy', widths: '160, 240, 320', sizes: '120px', alt: '', class: 'px-finder__img' }}
+              {%- else -%}
+                {%- render 'px-shape-icon', shape: block.settings.shape -%}
+              {%- endif -%}
             </span>
             <span class="px-finder__label">{{ block.settings.label | escape }}</span>
             <span class="px-finder__hint">{{ block.settings.hint | escape }}</span>
-            <span class="px-finder__go">
-              {{- block.settings.cta | escape -}}
-              <svg class="px-flip-rtl" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+            <span class="px-finder__go">{{ block.settings.cta | escape }}</span>
           </a>
         </li>
       {%- endfor -%}
-    </ol>
+    </ul>
   </div>
 </section>
 
@@ -89,10 +96,22 @@
     box-shadow: var(--px-bevel);
   }
 
-  .px-finder__step {
-    inline-size: 56px;
-    block-size: 56px;
+  .px-finder__pack {
+    display: grid;
+    place-items: center;
+    inline-size: 112px;
+    aspect-ratio: 1;
     margin-block-end: var(--px-space-2, 8px);
+    padding: 8px;
+    border-radius: var(--px-radius-card, 16px);
+    background: var(--px-white);
+  }
+
+  .px-finder__img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
   }
 
   @media screen and (max-width: 749px) {
@@ -101,9 +120,8 @@
       border-radius: var(--px-radius-card, 16px);
     }
 
-    .px-finder__step {
-      inline-size: 40px;
-      block-size: 40px;
+    .px-finder__pack {
+      inline-size: 84px;
       margin-block-end: 0;
     }
 
@@ -131,11 +149,11 @@
   }
 
   .px-finder__go {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--px-space-2, 8px);
     margin-block-start: var(--px-space-3, 12px);
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -146,21 +164,12 @@
     .px-finder__card:hover {
       transform: translateY(-4px);
     }
-
-    .px-finder__go svg {
-      transition: translate var(--px-d-s) var(--px-ease-standard);
-    }
-
-    .px-finder__card:hover .px-finder__go svg {
-      translate: calc(3px * var(--px-dir, 1)) 0;
-    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Pack finder",
-  "tag": "div",
   "class": "px-finder-section",
   "settings": [
     {
@@ -185,10 +194,11 @@
         { "type": "text", "id": "hint", "label": "Hint", "default": "Smaller packs for first builders." },
         { "type": "text", "id": "cta", "label": "Link text", "default": "Shop" },
         { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "product", "id": "product", "label": "Pack to show", "info": "Defaults to the collection's first pack." },
         {
           "type": "select",
           "id": "shape",
-          "label": "Icon",
+          "label": "Icon when no pack image",
           "options": [
             { "value": "square", "label": "Square" },
             { "value": "equilateral-triangle", "label": "Triangle" },

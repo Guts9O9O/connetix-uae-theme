@@ -435,7 +435,8 @@
             "cta": "Shop starter sets",
             "collection": "starter-sets",
             "shape": "square",
-            "range": "pastel"
+            "range": "pastel",
+            "product": "bright-starter-pack-56-pc"
           }
         },
         "p2": {
@@ -446,7 +447,8 @@
             "cta": "Shop large sets",
             "collection": "large-sets",
             "shape": "large-square",
-            "range": "bright"
+            "range": "bright",
+            "product": "pastel-mega-pack-202-pc"
           }
         },
         "p3": {
@@ -457,7 +459,8 @@
             "cta": "Shop ball runs",
             "collection": "ball-runs",
             "shape": "ball",
-            "range": "rainbow"
+            "range": "rainbow",
+            "product": "ball-run-bright-pack-114-pc"
           }
         },
         "p4": {
@@ -468,7 +471,8 @@
             "cta": "Shop gifts",
             "collection": "gifts",
             "shape": "rhombus",
-            "range": "glitter"
+            "range": "glitter",
+            "product": "glitter-unicorn-pack-56-pc"
           }
         }
       },

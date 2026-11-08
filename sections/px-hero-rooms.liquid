@@ -84,14 +84,24 @@
 
   @media screen and (min-width: 990px) {
     .px-hero__inner {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    /* Keep the whole hero, buttons included, inside a laptop screen */
+    .px-hero__tiles {
+      inline-size: min(100%, calc((100svh - 220px) * 1.2));
+      justify-self: end;
+    }
+
+    .px-hero__tiles .px-hero__tile {
+      aspect-ratio: 6 / 5;
     }
   }
 
   .px-hero__title {
     margin: 0;
     max-inline-size: 13ch;
-    font-size: clamp(2.5rem, 6.2vw, 5rem);
+    font-size: clamp(2.5rem, 5.6vw, 4.5rem);
     font-weight: 700;
     line-height: 1.02;
     letter-spacing: -0.025em;
