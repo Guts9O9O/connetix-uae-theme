@@ -353,6 +353,13 @@ body {
 }
 
 /* ---------- "UAE" beside the CONNETIX logo ---------- */
+[data-testid='header-logo']:has(.px-logo-tag) {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
 .px-logo-tag {
   display: inline-flex;
   align-items: center;
