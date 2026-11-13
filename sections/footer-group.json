@@ -234,18 +234,10 @@
             "font_size": "0.75rem",
             "case": "none"
           }
-        },
-        "policy_list": {
-          "type": "footer-policy-list",
-          "settings": {
-            "font_size": "0.75rem",
-            "case": "none"
-          }
         }
       },
       "block_order": [
-        "copyright",
-        "policy_list"
+        "copyright"
       ],
       "settings": {
         "section_width": "page-width",
