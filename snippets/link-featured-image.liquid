@@ -11,6 +11,7 @@
 
 {% assign image_sizes = sizes | default: 'auto' %}
 
+{%- capture link_image -%}
 {% if link.type == 'collection_link' %}
   {% if link.object.featured_image %}
     {{
@@ -37,4 +38,26 @@
       | image_tag: loading: 'lazy', class: class, sizes: image_sizes
     }}
   {% endif %}
+{% elsif link.type == 'http_link' %}
+  {% comment %} A typed /collections/<handle> URL still gets that collection's image. {% endcomment %}
+  {% assign url_path = link.url | split: '?' | first %}
+  {% if url_path contains '/collections/' %}
+    {% assign url_handle = url_path | split: '/collections/' | last | split: '/' | first %}
+    {% assign url_collection = collections[url_handle] %}
+    {% if url_collection.featured_image %}
+      {{
+        url_collection.featured_image
+        | image_url: width: 800
+        | image_tag: loading: 'lazy', class: class, sizes: image_sizes
+      }}
+    {% endif %}
+  {% endif %}
 {% endif %}
+{%- endcapture -%}
+
+{%- if link_image != blank -%}
+  {{ link_image }}
+{%- else -%}
+  {%- comment -%} No image for this link (a page, say): a branded tile keeps the grid even. {%- endcomment -%}
+  <span class="{{ class }} px-link-fallback" aria-hidden="true"></span>
+{%- endif -%}

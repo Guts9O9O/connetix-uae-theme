@@ -137,6 +137,17 @@
     }
   }
 
+  /* Tablets in portrait: smaller, wider tiles so the headline and buttons stay on the first screen */
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .px-hero__tiles {
+      inline-size: min(100%, 540px);
+    }
+
+    .px-hero__tiles .px-hero__tile {
+      aspect-ratio: 6 / 5;
+    }
+  }
+
   @media screen and (min-width: 990px) {
     .px-hero__inner {
       grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
