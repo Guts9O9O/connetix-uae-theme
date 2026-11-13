@@ -7,11 +7,18 @@
   dir="{{ request.locale.direction | default: 'ltr' }}"
 >
   <head>
-    {%- if settings.favicon != blank -%}
+    {%- liquid
+      # px: without a favicon in theme settings, use the CONNETIX mark uploaded to Content > Files
+      assign favicon_image = settings.favicon | default: images['px-favicon.jpg']
+    -%}
+    {%- if favicon_image != blank -%}
       <link
         rel="icon"
-        type="image/png"
-        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+        href="{{ favicon_image | image_url: width: 32, height: 32, format: 'png' }}"
+      >
+      <link
+        rel="apple-touch-icon"
+        href="{{ favicon_image | image_url: width: 180, height: 180 }}"
       >
     {%- endif -%}
 
