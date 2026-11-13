@@ -23,6 +23,19 @@
   {% endcapture %}
 {%- endif -%}
 
+{%- # px: no logo image in theme settings, so use the CONNETIX vector logo from Content > Files (password page) -%}
+{%- if image == blank and settings.px_logo_file != blank -%}
+  {%- capture px_logo -%}
+    <img
+      class="logo-block__image"
+      src="{{ settings.px_logo_file | file_url }}"
+      alt="{{ shop.name | escape }}"
+      width="238"
+      height="40"
+    >
+  {%- endcapture -%}
+{%- endif -%}
+
 <div
   class="
     logo-block
@@ -34,6 +47,8 @@
     {% else %}
       {% if image %}
         --logo-width: {{ image.width | times: 1.00 | divided_by: image.height | times: block_settings.pixel_height }}px;
+      {% elsif px_logo %}
+        --logo-width: {{ 238 | times: 1.00 | divided_by: 40 | times: block_settings.pixel_height }}px;
       {% else %}
         --logo-width: {{ shop.name.size | times: 0.65 }}em;
         --logo-height: {{ block_settings.pixel_height }}px;
@@ -60,6 +75,10 @@
   {% if logo_image %}
     <div class="logo-block__image-wrapper">
       {{ logo_image }}
+    </div>
+  {% elsif px_logo %}
+    <div class="logo-block__image-wrapper">
+      {{ px_logo }}
     </div>
   {% else %}
     {% render 'jumbo-text', text: shop.name %}
