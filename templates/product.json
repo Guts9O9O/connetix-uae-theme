@@ -274,6 +274,22 @@
                 "heading": ""
               },
               "blocks": {}
+            },
+            "px_inventory": {
+              "type": "product-inventory",
+              "settings": {
+                "inventory_threshold": 2,
+                "show_inventory_quantity": false
+              }
+            },
+            "px_delivery": {
+              "type": "px-delivery-note",
+              "settings": {
+                "title": "Free delivery across the GCC",
+                "text": "Usually 1–3 days within the UAE and 5–7 days to Saudi Arabia, Kuwait, Qatar, Bahrain and Oman. These are estimates, not guaranteed delivery dates.",
+                "link_label": "Shipping policy",
+                "link": "/policies/shipping-policy"
+              }
             }
           },
           "block_order": [
@@ -281,7 +297,9 @@
             "px_meta",
             "divider_VJhene",
             "variant_picker_R3rGDr",
+            "px_inventory",
             "buy_buttons_eYQEYi",
+            "px_delivery",
             "px_box",
             "px_features",
             "text_aEtTtq",

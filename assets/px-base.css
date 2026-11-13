@@ -351,3 +351,27 @@ body {
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
+
+/* ---------- "UAE" beside the CONNETIX logo ---------- */
+.px-logo-tag {
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: 8px;
+  padding: 2px 7px;
+  border: 1.5px solid currentColor;
+  border-radius: 6px;
+  color: var(--px-ink);
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 749px) {
+  .px-logo-tag {
+    margin-inline-start: 6px;
+    padding: 1px 5px;
+    font-size: 0.6875rem;
+  }
+}

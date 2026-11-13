@@ -176,13 +176,44 @@
           "type": "px-footer-logo",
           "settings": {},
           "blocks": {}
+        },
+        "menu_policies": {
+          "type": "menu",
+          "settings": {
+            "menu": "policies",
+            "heading": "Policies",
+            "menu_spacing": 12,
+            "show_as_accordion": false,
+            "accordion_icon": "plus",
+            "accordion_dividers": false,
+            "heading_preset": "paragraph",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "px_contact": {
+          "type": "px-footer-contact",
+          "settings": {
+            "heading": "Contact us",
+            "email": "support@trucarefzc.com",
+            "phone": "+971 50 410 3201",
+            "show_whatsapp": true,
+            "whatsapp": "",
+            "hours": "Monday–Friday, 8:30 AM–6:30 PM UAE time",
+            "operator": "CONNETIX UAE is operated by TRUCARE FZC, Hamriya Freezone, Sharjah, UAE."
+          }
         }
       },
       "block_order": [
         "px_footer_logo",
         "group_wErUQf",
         "menu_footer",
-        "menu_main"
+        "menu_main",
+        "menu_policies",
+        "px_contact"
       ],
       "name": "t:names.footer",
       "settings": {

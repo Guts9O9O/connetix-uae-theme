@@ -1,9 +1,12 @@
 {%- doc -%}
-  Product safety panel: the warnings metafield (custom.warnings), always visible
-  (not collapsed) so choking-hazard and magnet warnings are seen before purchase.
+  Safety and care panel, always visible on product pages. Wording follows the official
+  CONNETIX global website (age guidance, care) and the TRUCARE FZC brief: no invented
+  warnings and no certification claims. If the exact packaging warning text for a SKU is
+  entered in the product metafield custom.manufacturer_warnings, it is shown first, verbatim.
 {%- enddoc -%}
-{%- assign warnings = closest.product.metafields.custom.warnings -%}
-{%- if warnings != blank -%}
+{%- assign p = closest.product -%}
+{%- assign packaging = p.metafields.custom.manufacturer_warnings -%}
+{%- if p != blank -%}
   <section class="px-safety" aria-labelledby="PxSafetyTitle-{{ block.id }}" {{ block.shopify_attributes }}>
     <div class="px-safety__head">
       <svg class="px-safety__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -13,7 +16,15 @@
       </svg>
       <h2 class="px-safety__title" id="PxSafetyTitle-{{ block.id }}">{{ 'px.safety_title' | t }}</h2>
     </div>
-    <div class="px-safety__body">{{ warnings.value | escape | newline_to_br }}</div>
+    <div class="px-safety__body">
+      {%- if packaging != blank -%}
+        <p class="px-safety__packaging">{{ packaging.value | escape | newline_to_br }}</p>
+      {%- endif -%}
+      <p>{{ 'px.safety_age' | t }}</p>
+      <p>{{ 'px.safety_follow' | t }}</p>
+      <p>{{ 'px.safety_care' | t }}</p>
+      <p><a href="/pages/product-safety">{{ 'px.safety_more' | t }}</a></p>
+    </div>
   </section>
 {%- endif -%}
 
@@ -50,21 +61,39 @@
     font-size: 0.9375rem;
     line-height: 1.55;
   }
+
+  .px-safety__body p {
+    margin: 0;
+  }
+
+  .px-safety__body p + p {
+    margin-block-start: 0.5em;
+  }
+
+  .px-safety__packaging {
+    font-weight: 600;
+  }
+
+  .px-safety__body a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "Safety information",
+  "name": "Safety and care",
   "tag": null,
   "settings": [
     {
       "type": "paragraph",
-      "content": "Shows the product's 'Safety warnings' metafield. Keep this visible on every toy product."
+      "content": "Shows CONNETIX age and care guidance, plus the exact packaging warning text from the product metafield custom.manufacturer_warnings when it is filled in."
     }
   ],
   "presets": [
     {
-      "name": "Safety information"
+      "name": "Safety and care"
     }
   ]
 }

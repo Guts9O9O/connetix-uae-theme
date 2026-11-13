@@ -67,6 +67,8 @@
         height="40"
         style="--px-logo-h: {{ settings.logo_height }}px; --px-logo-h-mobile: {{ settings.logo_height_mobile }}px;"
       >
+      {%- # px: marks this as the official UAE store, next to the CONNETIX logo -%}
+      <span class="px-logo-tag">{{ 'px.logo_tag' | t }}</span>
     {%- else -%}
     {% render 'image',
       image: settings.logo,

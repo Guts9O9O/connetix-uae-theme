@@ -36,10 +36,23 @@
           <dd><bdi>{{ m.box_dimensions.value | escape }}</bdi></dd>
         </div>
       {%- endif -%}
-      {%- if m.materials != blank -%}
+      {%- liquid
+        # Construction wording from the CONNETIX global site, by range. Accessories (balls,
+        # car bases, base plates) get no construction line: their build isn't published.
+        assign ptitle = closest.product.title | downcase
+        assign construction = ''
+        if range == 'pro'
+          assign construction = 'px.materials_pro' | t
+        elsif m.play_type.value == 'accessory' or ptitle contains 'ball pack' or ptitle contains 'car pack' or ptitle contains 'base plate'
+          assign construction = ''
+        else
+          assign construction = 'px.materials_standard' | t
+        endif
+      -%}
+      {%- if construction != '' -%}
         <div class="px-specs__row">
           <dt>{{ 'px.specs.materials' | t }}</dt>
-          <dd>{{ m.materials.value | escape | newline_to_br }}</dd>
+          <dd>{{ construction }}</dd>
         </div>
       {%- endif -%}
       {%- if m.contains_battery != blank -%}

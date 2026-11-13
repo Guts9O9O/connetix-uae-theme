@@ -457,6 +457,17 @@
     "products_count": "عدد المنتجات: {{ count_text }}",
     "why_this_pack": "Why this pack",
     "video_play": "Play video",
-    "video_pause": "Pause video"
+    "video_pause": "Pause video",
+    "safety_age": "Recommended for children aged 3 years and up. Younger children should always be supervised.",
+    "safety_follow": "Always follow the age grading, safety warnings and care instructions supplied with this product. If the packaging or instructions give more specific guidance, that guidance takes precedence.",
+    "safety_care": "Wipe with a damp cloth and avoid harsh chemicals. Do not submerge tiles or place them in water.",
+    "safety_more": "Product safety information",
+    "materials_standard": "Standard tiles: non-toxic ABS plastic, free from BPA, phthalates and PFAS. Magnets are ultrasonically welded and secured with metal rivets.",
+    "materials_pro": "CONNETIX PRO tiles are mechanically friction-fitted and secured with industrial-grade adhesive.",
+    "contact_title": "Contact us",
+    "contact_email": "Email",
+    "contact_phone": "Phone",
+    "contact_whatsapp": "Chat on WhatsApp",
+    "logo_tag": "UAE"
   }
 }

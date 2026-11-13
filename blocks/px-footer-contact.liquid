@@ -1,0 +1,126 @@
+{%- doc -%}
+  Footer contact details for CONNETIX UAE (operated by TRUCARE FZC): email, phone,
+  a WhatsApp chat link and support hours. Every value comes from the block settings.
+{%- enddoc -%}
+{%- liquid
+  assign phone_digits = block.settings.phone | remove: ' ' | remove: '+' | remove: '-' | remove: '(' | remove: ')'
+  assign wa_digits = block.settings.whatsapp | default: block.settings.phone | remove: ' ' | remove: '+' | remove: '-' | remove: '(' | remove: ')'
+-%}
+<div class="px-fcontact" {{ block.shopify_attributes }}>
+  {%- if block.settings.heading != blank -%}
+    <p class="px-fcontact__heading">{{ block.settings.heading | escape }}</p>
+  {%- endif -%}
+  <ul class="px-fcontact__list" role="list">
+    {%- if block.settings.email != blank -%}
+      <li><a href="mailto:{{ block.settings.email | escape }}">{{ block.settings.email | escape }}</a></li>
+    {%- endif -%}
+    {%- if block.settings.phone != blank -%}
+      <li><a href="tel:+{{ phone_digits }}">{{ block.settings.phone | escape }}</a></li>
+    {%- endif -%}
+    {%- if wa_digits != blank and block.settings.show_whatsapp -%}
+      <li>
+        <a href="https://wa.me/{{ wa_digits }}" target="_blank" rel="noopener">
+          {{- 'px.contact_whatsapp' | t -}}
+        </a>
+      </li>
+    {%- endif -%}
+    {%- if block.settings.hours != blank -%}
+      <li class="px-fcontact__hours">{{ block.settings.hours | escape }}</li>
+    {%- endif -%}
+  </ul>
+  {%- if block.settings.operator != blank -%}
+    <p class="px-fcontact__operator">{{ block.settings.operator | escape }}</p>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .px-fcontact__heading {
+    margin: 0 0 12px;
+    font-weight: 700;
+  }
+
+  .px-fcontact__list {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+
+  .px-fcontact__list a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  .px-fcontact__hours,
+  .px-fcontact__operator {
+    opacity: 0.85;
+  }
+
+  .px-fcontact__operator {
+    margin: 14px 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact details",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Contact us"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Support email",
+      "default": "support@trucarefzc.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "+971 50 410 3201"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp",
+      "label": "WhatsApp number",
+      "info": "Leave blank to use the phone number."
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "Support hours",
+      "default": "Monday–Friday, 8:30 AM–6:30 PM UAE time"
+    },
+    {
+      "type": "text",
+      "id": "operator",
+      "label": "Operator line",
+      "default": "CONNETIX UAE is operated by TRUCARE FZC, Hamriya Freezone, Sharjah, UAE."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact details"
+    }
+  ]
+}
+{% endschema %}

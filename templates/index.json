@@ -219,8 +219,8 @@
         "button_1_link": "shopify://collections/all",
         "button_2_label": "Find a starter set",
         "button_2_link": "#px-finder",
-        "facts": "Starter packs from [price]. Safety tested for ages 3 and up.",
-        "facts_fallback": "Safety tested for ages 3 and up. Every range connects.",
+        "facts": "Starter packs from [price]. Recommended for ages 3 and up. Free delivery across the GCC.",
+        "facts_fallback": "Recommended for ages 3 and up. Free delivery across the GCC.",
         "facts_collection": "starter-sets"
       },
       "blocks": {
@@ -447,7 +447,7 @@
       "type": "px-made-to-last",
       "settings": {
         "heading": "Magnetic tiles, made to last",
-        "text": "Built to withstand years of play, every CONNETIX tile is made with high-quality materials and careful engineering for safety and durability.",
+        "text": "Built to withstand years of play, with strong magnets and careful engineering in every CONNETIX tile.",
         "video_url": "https://cdn.shopify.com/videos/c/vp/52547465734a422a8392c14fae10ca17/52547465734a422a8392c14fae10ca17.HD-720p-1.6Mbps-100446116.mp4",
         "video_label": "A CONNETIX tile turning to show how it is made"
       },
@@ -463,8 +463,8 @@
         "m2": {
           "type": "point",
           "settings": {
-            "title": "Rivets for extra safety",
-            "text": "Ultrasonic welding and metal rivets keep magnets safely enclosed.",
+            "title": "Magnets secured inside",
+            "text": "On standard tiles, magnets are ultrasonically welded and secured with metal rivets.",
             "colour": "#92d5de"
           }
         },
@@ -479,8 +479,8 @@
         "m4": {
           "type": "point",
           "settings": {
-            "title": "Safety tested for 3+",
-            "text": "Made from non-toxic ABS plastic that is free from BPA, lead and phthalates.",
+            "title": "Non-toxic materials",
+            "text": "Standard tiles are made from non-toxic ABS plastic, free from BPA, phthalates and PFAS.",
             "colour": "#ecc75c"
           }
         }
